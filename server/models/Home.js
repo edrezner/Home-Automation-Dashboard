@@ -3,13 +3,13 @@ const { Schema } = mongoose;
 
 const homesSchema = new Schema({
     name: {
-
+        type: String,
+        required: true,
     },
     users: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
     }], 
-    // Check
     rooms: [{
         type: Schema.Types.ObjectId,
         ref: 'Room'
