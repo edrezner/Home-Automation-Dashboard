@@ -3,10 +3,13 @@ const { Schema } = mongoose;
 
 const roomSchema = new Schema({
     name:{
-
+        type: String,
+        required: true,
+        trim: true
     },
     type: {
-
+        type: String,
+        required: true
     },
     home:{
         type: Schema.Types.ObjectId,
