@@ -1,23 +1,24 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { Device, Home, Room, Setting, User } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
-    user: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
-
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-        return user;
-      }
-
-      throw new AuthenticationError('Not logged in');
+    user: async () => {
+        return await User.find();
+    },
+    homeDevices: async (parent, {_id}) => {
+      const devices = await Home.findById(_id).populate('devices');
+      return devices;
+    },
+    roomDevices: async (parent, {_id}) => {
+      const devices = await Room.findById(_id).populate('devices');
+      return devices;
+    },
+    homeRooms: async (parent, {_id}) => {
+      const rooms = await Home.findById(_id).populate('rooms');
+      return rooms;
     }
   },
 
