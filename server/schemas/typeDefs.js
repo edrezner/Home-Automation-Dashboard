@@ -55,6 +55,22 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     updateUser(username: String!, email: String, password: String): User
     login(email: String!, password: String!): Auth
+    addDevice(name: String!, type: String!, settings: SettingInput): Device
+    updateDevice(_id: ID!, name: String, type: String, settings: SettingInput): Device
+    deleteDevice(_id: ID!): Device
+    addRoom(name: String!, type: String!): Room
+    updateRoom(name: String!, type: String!): Room
+    deleteRoom(_id: ID!): Room
+    addHome(name: String!, type: String!): Home
+    deleteHome(_id: ID!): Home
+  }
+
+  input SettingInput {
+    isOn: Boolean
+    temperature: Int
+    brightness: Int
+    color: String
+    volume: Int
   }
 `;
 
