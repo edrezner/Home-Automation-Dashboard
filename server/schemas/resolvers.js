@@ -6,19 +6,23 @@ const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: "orders.products",
-          populate: "category",
-        });
-
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-        return user;
+      if(context.user){
+        return await User.findById(context.user._id);
       }
-
-      throw new AuthenticationError("Not logged in");
+      throw new AuthenticationError('Not logged in');
     },
+    homeDevices: async (parent, {_id}) => {
+      const home = await Home.findById(_id).populate('devices');
+      return home.devices;
+    },
+    roomDevices: async (parent, {_id}) => {
+      const room = await Room.findById(_id).populate('devices');
+      return room.devices;
+    },
+    homeRooms: async (parent, {_id}) => {
+      const home = await Home.findById(_id).populate('rooms');
+      return home.rooms;
+    }
   },
 
   Mutation: {
