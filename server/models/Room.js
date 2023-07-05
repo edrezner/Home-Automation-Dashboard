@@ -14,7 +14,7 @@ const roomSchema = new Schema({
     home:{
         type: Schema.Types.ObjectId,
         ref: 'Home',
-        required: true
+        required: false
     },
     devices:[{
         type: Schema.Types.ObjectId,
@@ -22,4 +22,5 @@ const roomSchema = new Schema({
     }]
 })
 const Room = mongoose.model('Room', roomSchema);
+
 module.exports = Room;
