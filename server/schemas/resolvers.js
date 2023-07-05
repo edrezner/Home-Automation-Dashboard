@@ -5,20 +5,23 @@ const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 const resolvers = {
   Query: {
-    user: async () => {
-        return await User.find();
+    user: async (parent, args, context) => {
+      if(context.user){
+        return await User.findById(context.user._id);
+      }
+      throw new AuthenticationError('Not logged in');
     },
     homeDevices: async (parent, {_id}) => {
-      const devices = await Home.findById(_id).populate('devices');
-      return devices;
+      const home = await Home.findById(_id).populate('devices');
+      return home.devices;
     },
     roomDevices: async (parent, {_id}) => {
-      const devices = await Room.findById(_id).populate('devices');
-      return devices;
+      const room = await Room.findById(_id).populate('devices');
+      return room.devices;
     },
     homeRooms: async (parent, {_id}) => {
-      const rooms = await Home.findById(_id).populate('rooms');
-      return rooms;
+      const home = await Home.findById(_id).populate('rooms');
+      return home.rooms;
     }
   },
 
