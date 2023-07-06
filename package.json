@@ -6,7 +6,7 @@
     "concurrently": "^5.1.0"
   },
   "scripts": {
-        "start": "node server --ignore client",
+    "start": "node server --ignore client",
     "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
