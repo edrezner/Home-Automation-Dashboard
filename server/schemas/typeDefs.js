@@ -30,13 +30,13 @@ const typeDefs = gql`
     devices: [Device]
   }
 
-  type: Setting {
+  type Setting {
     _id: ID
     isOn: Boolean
     temperature: Int
     brightness: Int
     color: String
-    valume: Int
+    volume: Int
   }
 
   type Auth {

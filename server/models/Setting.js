@@ -36,4 +36,4 @@ const settingSchema = new Schema({
 
 const Setting = mongoose.model("Setting", settingSchema);
 
-module.exports = Device;
+module.exports = Setting;
