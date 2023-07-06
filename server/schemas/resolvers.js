@@ -6,26 +6,31 @@ const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
-      if(context.user){
+      if (context.user) {
         return await User.findById(context.user._id);
       }
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
-    homeDevices: async (parent, {_id}) => {
-      const home = await Home.findById(_id).populate('devices').populate('settings');
+    homeDevices: async (parent, { _id }) => {
+      const home = await Home.findById(_id)
+        .populate("devices")
+        .populate("settings");
       return home;
     },
-    roomDevices: async (parent, {_id}) => {
-      const room = await Room.findById(_id).populate('devices').populate({
-        path: 'devices',
-        populate: 'settings'
+    roomDevices: async (parent, { _id }) => {
+      const room = await Room.findById(_id).populate("devices").populate({
+        path: "devices",
+        populate: "settings",
       });
       return room;
     },
-    homeRooms: async (parent, {_id}) => {
-      const home = await Home.findById(_id).populate('rooms').populate('devices').populate('settings');
+    homeRooms: async (parent, { _id }) => {
+      const home = await Home.findById(_id)
+        .populate("rooms")
+        .populate("devices")
+        .populate("settings");
       return home.rooms;
-    }
+    },
   },
 
   Mutation: {
@@ -63,13 +68,24 @@ const resolvers = {
     },
 
     addDevice: async (parent, args) => {
+      const setting = await Setting.create(args.settings);
+      delete args.settings;
+      args.settings = setting._id;
       const device = await Device.create(args);
       return device;
     },
 
     updateDevice: async (parent, args) => {
-      const { _id, ...update } = args;
-      const updatedDevice = await Device.findByIdAndUpdate(_id, update, {
+      const device = await Device.findbyID(_id);
+      const settingUpdate = await Setting.findByIdAndUpdate(
+        device.settings,
+        args.settings,
+        {
+          new: true,
+        }
+      );
+      delete args.settings;
+      const updatedDevice = await Device.findByIdAndUpdate(_id, args, {
         new: true,
       });
       return updatedDevice;
