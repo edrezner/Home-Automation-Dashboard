@@ -1,20 +1,24 @@
 import React, { createContext, useContext } from "react";
+import { useHomeReducer } from "./reducers";
 
-// const HomeContext = createContext();
-// const { Provider } = HomeContext;
+const HomeContext = createContext();
+const { Provider } = HomeContext;
 
-// const HomeProvider = ({ value = [], ...props }) => {
-// //   const [state, dispatch] = useProductReducer({
-// //     products: [],
-// //     categories: [],
-// //     currentCategory: '',
-// //   });
+const HomeProvider = ({ value = [], ...props }) => {
+  const [state, dispatch] = useHomeReducer({
+    homes: [],
+    rooms: [],
+    devices: [],
+    settings: {},
+    ... value
+    // ?
+  });
 
-//   return <Provider value={[state, dispatch]} {...props} />;
-// };
+  return <Provider value={[state, dispatch]} {...props} />;
+};
 
-// const useStoreContext = () => {
-//   return useContext(StoreContext);
-// };
+const useHomeContext = () => {
+  return useContext(HomeContext);
+};
 
-// export { StoreProvider, useStoreContext };
+export { HomeProvider, useHomeContext };

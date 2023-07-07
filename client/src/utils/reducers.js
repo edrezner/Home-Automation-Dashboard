@@ -24,7 +24,8 @@ export const reducer = (state, action) => {
                 ...state,
                 homes: state.homes.map((home) => {
                     if (home._id === action._id){
-                        home.name = action.name;
+                        return {...home, name: action.name}
+                        // home.name = action.name;
                         // or... action.home._id / action.home.name
                     }
                     return home;
@@ -45,9 +46,10 @@ export const reducer = (state, action) => {
                 ...state,
                 rooms: state.rooms.map((room) => {
                     if (room._id === action._id){
-                        room.name = action.name;
+                        return {...room, name: action.name}
+                        //room.name = action.name;
                     }
-                    return home;
+                    return room;
                 })
             };
         case REMOVE_ROOM:
@@ -65,7 +67,8 @@ export const reducer = (state, action) => {
                 ...state,
                 devices: state.devices.map((device) => {
                     if (device._id === action._id){
-                        device.name = action.name;
+                        return {...device, name: action.name}
+                        // device.name = action.name;
                     }
                     return device;
                 })
@@ -78,9 +81,10 @@ export const reducer = (state, action) => {
         case UPDATE_SETTINGS:
             return {
                 ...state,
-                devices: state.devices.map((device) => {
-                    if (device._id === action._id){
-                        device.settings = action.settings
+                settings: state.settings.map((setting) => {
+                    if (setting._id === action._id){
+                        return action.settings;
+                        // device.settings = action.settings
                     }
                     return device;
                 })
@@ -89,6 +93,6 @@ export const reducer = (state, action) => {
     }
 }
 
-export function useAutomationReducer(initialState){
+export function useHomeReducer(initialState){
     return useReducer(reducer, initialState);
 }
