@@ -3,6 +3,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 const HomeList = () => {
   const [home, setHome] = React.useState('');
@@ -28,6 +30,7 @@ const HomeList = () => {
           <MenuItem value={22}>Pablo's Penthouse</MenuItem>
         </Select>
       </FormControl>
+      <Fab color="primary" aria-label="add"><AddIcon /></Fab>
     </div>
   );
 }

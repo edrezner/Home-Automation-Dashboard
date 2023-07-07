@@ -12,7 +12,6 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { StoreProvider } from './utils/GlobalState'
-import SignInSide from './pages/SignIn'
 import DevicePage from './pages/DevicePage'
 
 const httpLink = createHttpLink({
