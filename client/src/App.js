@@ -37,8 +37,8 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <HomeProvider>
-            <Nav />
+          {/* <HomeProvider> */}
+            {/* <Nav /> */}
             <Routes>
               <Route 
                 path="/" 
@@ -52,12 +52,12 @@ function App() {
                 path="/signup" 
                 element={<Signup />} 
               />
-              <Route 
+              {/* <Route 
                 path="*" 
                 element={<NoMatch />} 
-              />
+              /> */}
             </Routes>
-          </HomeProvider>
+          {/* </HomeProvider> */}
         </div>
       </Router>
     </ApolloProvider>
