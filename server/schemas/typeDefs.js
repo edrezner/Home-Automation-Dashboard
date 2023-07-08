@@ -11,7 +11,7 @@ const typeDefs = gql`
     _id: ID
     name: String
     type: String
-    settings: Setting
+    settings: ID
   }
 
   type Home {
@@ -27,7 +27,7 @@ const typeDefs = gql`
     name: String
     type: String
     home: Home
-    devices: [Device]
+    devices: [ID]
   }
 
   type Setting {
@@ -55,7 +55,12 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     updateUser(username: String!, email: String, password: String): User
     login(email: String!, password: String!): Auth
-    addDevice(name: String!, type: String!, settings: SettingInput): Device
+    addDevice(
+      name: String!
+      type: String!
+      settings: SettingInput
+      roomId: ID
+    ): Room
     updateDevice(
       _id: ID!
       name: String

@@ -61,18 +61,33 @@ const resolvers = {
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
-      
+
       const token = signToken(user);
 
       return { token, user };
     },
 
+    /**
+     *
+     * @param {*} args will contain new settings object and new device object.
+     * @description this function will take care of the ID's and lookups
+     * @returns device object (for re-rendering if needed or debugging)
+     */
     addDevice: async (parent, args) => {
       const setting = await Setting.create(args.settings);
       delete args.settings;
+      // Args.settings object is replaced with its new id
       args.settings = setting._id;
-      const device = await Device.create(args);
-      return device;
+      const device = await Device.create({
+        name: args.name,
+        type: args.type,
+        settings: args.settings,
+      });
+
+      const room = await Room.findById(args.roomId);
+      room.devices.push(device._id);
+      const newRoom = await room.save();
+      return await newRoom;
     },
 
     updateDevice: async (parent, args) => {

@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import Button from "@mui/material/Button";
 import { Stack, Slider } from "@mui/material";
+import Box from "@mui/material/Box";
 import { VolumeDown, VolumeUp } from "@mui/icons-material";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,6 +10,16 @@ import Switch from "@mui/material/Switch";
 import { Grid, Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { useState } from "react";
+import WireframeDevices from "./wireframe-device.png";
+import "./Device.css";
+
+import Speaker from "../components/Speaker/Speaker";
+import Thermostat from "../components/Thermostat/Thermostat";
+import SwitchDevice from "../components/Switch/Switch";
+
+import { useQuery, useMutation } from "@apollo/client";
+// TODO: Correct module package
+import { QUERY_ROOM_DEVICES } from "../utils/queries";
 
 // const styles = {
 //   deviceContainer: css`
@@ -27,64 +38,93 @@ import { useState } from "react";
 //   `,
 // };
 
-function valuetext(value) {
-  return `${value}°F`;
-}
-
-const marks = [
-  {
-    value: 0,
-    label: "0°F",
-  },
-  {
-    value: 50,
-    label: "50°F",
-  },
-  {
-    value: 80,
-    label: "80°F",
-  },
-  {
-    value: 100,
-    label: "100°F",
-  },
-];
-
-const DevicePage = () => {
-  const [activity, setActivity] = useState(30);
-  const handleChange = (event, newValue) => {
-    setActivity(newValue);
-    console.log(newValue);
-  };
+function Device({ name, type }) {
+  const putaway = (
+    <>
+      <div>
+        <ul>
+          <li>
+            <b>Name: </b>
+            <span>{name}</span>
+          </li>
+          <li>
+            <b>Type: </b>
+            <span>{type}</span>
+          </li>
+        </ul>
+      </div>
+    </>
+  );
 
   return (
-    <div>
-      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-        <VolumeDown />
-        <Slider
-          aria-label="Volume"
-          value={activity}
-          defaultValue={50}
-          onChange={handleChange}
-        />
-        <VolumeUp />
-      </Stack>
-      {/* <Slider disabled defaultValue={30} aria-label="Disabled slider" /> */}
-      <Stack sx={{ height: 200 }} spacing={1} direction="row">
-        <Slider
-          getAriaLabel={() => "Temperature"}
-          orientation="vertical"
-          getAriaValueText={valuetext}
-          defaultValue={[50, 80]}
-          valueLabelDisplay="auto"
-          marks={marks}
-        />
-      </Stack>
-      <FormGroup>
-        <FormControlLabel control={<Switch defaultChecked />} label="On" />
-      </FormGroup>
-    </div>
+    <>
+      {type === "SmartLight" && <SwitchDevice name={name} />}
+      {type === "SmartThermo" && <Thermostat name={name} />}
+      {type === "SmartSpeaker" && <Speaker name={name} />}
+    </>
   );
-};
+}
 
-export default DevicePage;
+export default function VerticalAccessibleSlider({ roomId }) {
+  function preventHorizontalKeyboardNavigation(event) {
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+    }
+  }
+  // { loading, error, data, refetch }
+  const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
+    variables: { id: roomId },
+  });
+
+  // const devices = [
+  //   {
+  //     name: "Philips GoLite",
+  //     type: "SmartLight",
+  //   },
+  //   {
+  //     name: "ThermoFrost",
+  //     type: "SmartThermo",
+  //   },
+  //   {
+  //     name: "Yamaha",
+  //     type: "SmartSpeaker",
+  //   },
+  // ];
+
+  // <Box sx={{ height: 300 }}>
+
+  return (
+    <>
+      {console.log(data)}
+      {loading ? (
+        "Please wait..."
+      ) : (
+        <>
+          <Stack direction="row" spacing={2}>
+            <h2>Devices</h2>
+            <button
+              id="logout"
+              onClick={() => {
+                /*TODO */
+              }}
+            >
+              Logout
+            </button>
+          </Stack>
+          <div sx={{ height: 300 }}>
+            {/* {devices.map(devObject => { */}
+            {/* data.devices ?? */}
+
+            {data.devices.map(({ type, name }, i) => {
+              return (
+                <Device key={"device-" + i} type={type} name={name}></Device>
+              );
+            })}
+          </div>
+          <hr />
+          <img src={WireframeDevices}></img>
+        </>
+      )}
+    </>
+  );
+}
