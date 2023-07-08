@@ -87,6 +87,7 @@ export const reducer = (state, action) => {
             // device.settings = action.settings
           }
           return setting;
+          // return device?
         }),
       };
     default:
