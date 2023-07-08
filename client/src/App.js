@@ -10,7 +10,7 @@ import { setContext } from '@apollo/client/link/context'
 
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
-import Signup from './pages/Signup'
+import Signup2 from './pages/Signup2'
 import { StoreProvider } from './utils/GlobalState'
 import DevicePage from './pages/DevicePage'
 
@@ -44,7 +44,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Dashboard />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
+            <Route path='/signup' element={<Signup2 />} />
             <Route path='/devices' element={<DevicePage />} />
 
           </Routes>
