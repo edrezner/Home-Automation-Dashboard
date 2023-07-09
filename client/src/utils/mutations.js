@@ -34,8 +34,13 @@ export const UPDATE_USER = gql`
 `;
 
 export const ADD_DEVICE = gql`
-  mutation addDevice($name: String!, $type: String!, $settings: SettingInput) {
-    addDevice(name: $name, type: $type, settings: $settings) {
+  mutation addDevice(
+    $name: String!
+    $type: String!
+    $settings: SettingInput
+    $roomId: ID!
+  ) {
+    addDevice(name: $name, type: $type, settings: $settings, roomId: $roomId) {
       _id
       name
       type
