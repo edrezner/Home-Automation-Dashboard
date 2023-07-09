@@ -5,19 +5,13 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-  }
-
-  type Device {
-    _id: ID
-    name: String
-    type: String
-    settings: Setting
+    homes: [Home]
   }
 
   type Home {
     _id: ID
     name: String
-    users: [User]
+    user: User
     rooms: [Room]
     devices: [Device]
   }
@@ -28,6 +22,13 @@ const typeDefs = gql`
     type: String
     home: Home
     devices: [ID]
+  }
+
+  type Device {
+    _id: ID
+    name: String
+    type: String
+    settings: Setting
   }
 
   type Setting {

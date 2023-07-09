@@ -10,7 +10,7 @@ const HomeProvider = ({ value = [], ...props }) => {
     rooms: [],
     devices: [],
     settings: {},
-    ... value
+    ...value
     // ?
   });
 
