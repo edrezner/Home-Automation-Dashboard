@@ -12,23 +12,29 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     homeDevices: async (parent, { _id }) => {
-      const home = await Home.findById(_id)
-        .populate("devices")
-        .populate("settings");
-      return home;
+      const home = await Home.findById(_id).populate({
+        path: "devices",
+        // populate: "settings",
+        populate: {
+          path: "settings"
+        }
+      });
+      console.log(home.devices);
+      return home.devices;
     },
     roomDevices: async (parent, { _id }) => {
-      const room = await Room.findById(_id).populate("devices").populate({
+      const room = await Room.findById(_id).populate({
         path: "devices",
-        populate: "settings",
+        // populate: "settings"
+        populate: {
+          path: "settings"
+        }
       });
-      return room;
-    },
+      return room.devices;
+    }, 
     homeRooms: async (parent, { _id }) => {
       const home = await Home.findById(_id)
-        .populate("rooms")
-        .populate("devices")
-        .populate("settings");
+        .populate("rooms");
       return home.rooms;
     },
   },

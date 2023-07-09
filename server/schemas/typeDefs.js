@@ -11,7 +11,7 @@ const typeDefs = gql`
     _id: ID
     name: String
     type: String
-    settings: ID
+    settings: Setting
   }
 
   type Home {
