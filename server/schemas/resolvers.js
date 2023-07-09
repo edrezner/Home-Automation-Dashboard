@@ -16,8 +16,8 @@ const resolvers = {
         path: "devices",
         // populate: "settings",
         populate: {
-          path: "settings"
-        }
+          path: "settings",
+        },
       });
       console.log(home.devices);
       return home.devices;
@@ -25,16 +25,15 @@ const resolvers = {
     roomDevices: async (parent, { _id }) => {
       const room = await Room.findById(_id).populate({
         path: "devices",
-        // populate: "settings"
-        populate: {
-          path: "settings"
-        }
+        populate: "settings",
+        // populate: {
+        //   path: "settings"
+        // }
       });
       return room.devices;
-    }, 
+    },
     homeRooms: async (parent, { _id }) => {
-      const home = await Home.findById(_id)
-        .populate("rooms");
+      const home = await Home.findById(_id).populate("rooms");
       return home.rooms;
     },
   },

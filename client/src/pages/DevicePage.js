@@ -58,38 +58,34 @@ function Device({ name, type }) {
 
   return (
     <>
-      {type === "SmartLight" && <SwitchDevice name={name} />}
-      {type === "SmartThermo" && <Thermostat name={name} />}
-      {type === "SmartSpeaker" && <Speaker name={name} />}
+      {type === "Lights" && <SwitchDevice name={name} />}
+      {type === "Temp" && <Thermostat name={name} />}
+      {type === "Speakers" && <Speaker name={name} />}
     </>
   );
 }
-
-export default function VerticalAccessibleSlider({ roomId }) {
-  function preventHorizontalKeyboardNavigation(event) {
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-      event.preventDefault();
-    }
-  }
+// const roomId = "64ab1fe8fc66c11649bfbf92";
+export default function RenderDevices() {
   // { loading, error, data, refetch }
   const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
-    variables: { id: roomId },
+    variables: { id: "64ab1fe8fc66c11649bfbf92" },
   });
+  console.log(data);
 
-  // const devices = [
-  //   {
-  //     name: "Philips GoLite",
-  //     type: "SmartLight",
-  //   },
-  //   {
-  //     name: "ThermoFrost",
-  //     type: "SmartThermo",
-  //   },
-  //   {
-  //     name: "Yamaha",
-  //     type: "SmartSpeaker",
-  //   },
-  // ];
+  const devices = [
+    {
+      name: "Philips GoLite",
+      type: "SmartLight",
+    },
+    {
+      name: "ThermoFrost",
+      type: "SmartThermo",
+    },
+    {
+      name: "Yamaha",
+      type: "SmartSpeaker",
+    },
+  ];
 
   // <Box sx={{ height: 300 }}>
 
@@ -115,7 +111,7 @@ export default function VerticalAccessibleSlider({ roomId }) {
             {/* {devices.map(devObject => { */}
             {/* data.devices ?? */}
 
-            {data.devices.map(({ type, name }, i) => {
+            {devices.map(({ type, name }, i) => {
               return (
                 <Device key={"device-" + i} type={type} name={name}></Device>
               );
