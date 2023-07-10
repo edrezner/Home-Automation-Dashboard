@@ -11,7 +11,7 @@ import { setContext } from '@apollo/client/link/context'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import { StoreProvider } from './utils/GlobalState'
+import { HomeProvider } from './utils/GlobalState'
 import DevicePage from './pages/DevicePage'
 
 const httpLink = createHttpLink({
@@ -38,7 +38,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          {/* <HomeProvider> */}
+          <HomeProvider>
 
           {/* <Nav /> */}
           <Routes>
@@ -48,7 +48,7 @@ function App() {
             <Route path='/devices' element={<DevicePage />} />
 
           </Routes>
-          {/* </HomeProvider> */}
+          </HomeProvider>
         </div>
       </Router>
     </ApolloProvider>

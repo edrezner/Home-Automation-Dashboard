@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -8,13 +8,24 @@ import AddIcon from '@mui/icons-material/Add';
 
 import { QUERY_USER } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
+import { useHomeContext } from '../../utils/GlobalState';
+import {
+  UPDATE_CURRENT_HOME
+} from '../../utils/actions';
 
 const HomeList = () => {
+  const [state, dispatch] = useHomeContext();
+
   const [home, setHome] = React.useState('');
   const { loading, data } = useQuery(QUERY_USER);
   const userData = data?.me || data?.user || {};
+
   const handleChange = (event) => {
     setHome(event.target.value);
+    dispatch({
+      type: UPDATE_CURRENT_HOME,
+      currentHome: event.target.value
+    });
   };
 
   if (loading) {
@@ -33,7 +44,7 @@ const HomeList = () => {
           autoWidth
           label="Home"
         >
-          {userData.homes.map((home) => {
+          {userData.homes?.map((home) => {
             return (
               <MenuItem value={home._id}>{home.name}</MenuItem>
             )
