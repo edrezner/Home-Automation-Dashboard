@@ -11,7 +11,7 @@ import { setContext } from '@apollo/client/link/context'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import { StoreProvider } from './utils/GlobalState'
+import { HomeProvider } from './utils/GlobalState'
 import DevicePage from './pages/DevicePage'
 
 const httpLink = createHttpLink({
@@ -38,16 +38,16 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          {/* <HomeProvider> */}
+          <HomeProvider>
 
-          {/* <Nav /> */}
-          <Routes>
-            <Route path='/' element={<Dashboard />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/devices*' element={<DevicePage />} />
-
-          </Routes>
+            {/* <Nav /> */}
+            <Routes>
+              <Route path='/' element={<Dashboard />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/signup' element={<Signup />} />
+              <Route path='/rooms/:id' element={<DevicePage />} />
+            </Routes>
+          </HomeProvider> 
           {/* </HomeProvider> 
           /devices?deviceId=__ <- search params
           /devices/__ <- useLocation or window.location.href
