@@ -10,7 +10,12 @@ const HomeProvider = ({ value = [], ...props }) => {
     rooms: [],
     devices: [],
     settings: {},
-    ... value
+
+    currentHome: "",
+    currentRoom: "",
+    ...value
+    // ?
+
   });
 
   return <Provider value={[state, dispatch]} {...props} />;

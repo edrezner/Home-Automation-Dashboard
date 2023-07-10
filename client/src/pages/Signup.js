@@ -104,6 +104,7 @@ function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
+                  type="email"
                   autoComplete="email"
                   onChange={handleChange}
                 />

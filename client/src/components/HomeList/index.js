@@ -6,12 +6,20 @@ import Select from '@mui/material/Select';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
+import { QUERY_USER } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
+
 const HomeList = () => {
   const [home, setHome] = React.useState('');
-
+  const { loading, data } = useQuery(QUERY_USER);
+  const userData = data?.me || data?.user || {};
   const handleChange = (event) => {
     setHome(event.target.value);
   };
+
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
 
   return (
     <div>
@@ -25,6 +33,11 @@ const HomeList = () => {
           autoWidth
           label="Home"
         >
+          {userData.homes.map((home) => {
+            return (
+              <MenuItem value={home._id}>{home.name}</MenuItem>
+            )
+          })}
           <MenuItem value={10}>Evan's Estate</MenuItem>
           <MenuItem value={21}>Eric's Estate</MenuItem>
           <MenuItem value={22}>Pablo's Penthouse</MenuItem>
