@@ -10,6 +10,8 @@ import {
   UPDATE_DEVICE,
   REMOVE_DEVICE,
   UPDATE_SETTINGS,
+  UPDATE_CURRENT_HOME,
+  UPDATE_CURRENT_ROOM
 } from "./actions";
 
 export const reducer = (state, action) => {
@@ -90,6 +92,16 @@ export const reducer = (state, action) => {
           // return device?
         }),
       };
+    case UPDATE_CURRENT_HOME:
+      return {
+        ...state,
+        currentHome: action.currentHome,
+      };
+      case UPDATE_CURRENT_ROOM:
+        return {
+          ...state,
+          currentRoom: action.currentRoom,
+        };
     default:
       return state;
   }
