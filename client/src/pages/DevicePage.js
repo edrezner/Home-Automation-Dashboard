@@ -1,5 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
+import { Link, useParams } from 'react-router-dom';
+import { useHomeContext } from '../utils/GlobalState';
 import Button from "@mui/material/Button";
 import { Stack, Slider } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -9,7 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { Grid, Typography } from "@mui/material";
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WireframeDevices from "./wireframe-device.png";
 import "./Device.css";
 
@@ -65,33 +67,53 @@ function Device({ name, type }) {
   );
 }
 // const roomId = "64ab1fe8fc66c11649bfbf92";
+// id: "64ab3d1dad3cf2165027a442"
 export default function RenderDevices() {
   // { loading, error, data, refetch }
-  const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
-    variables: { id: "64ab1fe8fc66c11649bfbf92" },
-  });
-  console.log(data);
+  const [state, dispatch] = useHomeContext();
+  const { id } = useParams();
+  const [currentDevice, setCurrentDevice] = useState({});
 
-  const devices = [
-    {
-      name: "Philips GoLite",
-      type: "SmartLight",
-    },
-    {
-      name: "ThermoFrost",
-      type: "SmartThermo",
-    },
-    {
-      name: "Yamaha",
-      type: "SmartSpeaker",
-    },
-  ];
+  const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
+    variables: { id: "64ab3d1dad3cf2165027a44" },
+    // TO DO: Use id from line 72 instead of hardcoded id
+  });
+
+  const { devices, room } = state;
+
+
+  // localStorage
+  // redux Toolkit lets you switch between reducers.
+  // you would .combineReducers to initiate it
+  // window.roomId = "xxx"
+
+  useEffect(() => {
+    if (devices.length){
+      setCurrentDevice(devices.find((device) => device._id === id))
+    }
+    if(!loading)
+      console.log({loading,error,data});
+  }, [loading, data])
+
+  // const devices = [
+  //   {
+  //     name: "Philips GoLite",
+  //     type: "SmartLight",
+  //   },
+  //   {
+  //     name: "ThermoFrost",
+  //     type: "SmartThermo",
+  //   },
+  //   {
+  //     name: "Yamaha",
+  //     type: "SmartSpeaker",
+  //   },
+  // ];
 
   // <Box sx={{ height: 300 }}>
 
   return (
     <>
-      {console.log(data)}
       {loading ? (
         "Please wait..."
       ) : (
@@ -111,7 +133,7 @@ export default function RenderDevices() {
             {/* {devices.map(devObject => { */}
             {/* data.devices ?? */}
 
-            {devices.map(({ type, name }, i) => {
+            {data?.roomDevices.map(({ type, name }, i) => {
               return (
                 <Device key={"device-" + i} type={type} name={name}></Device>
               );
