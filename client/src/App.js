@@ -45,10 +45,15 @@ function App() {
             <Route path='/' element={<Dashboard />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/devices' element={<DevicePage />} />
+            <Route path='/devices*' element={<DevicePage />} />
 
           </Routes>
-          {/* </HomeProvider> */}
+          {/* </HomeProvider> 
+          /devices?deviceId=__ <- search params
+          /devices/__ <- useLocation or window.location.href
+          
+          
+          */}
         </div>
       </Router>
     </ApolloProvider>

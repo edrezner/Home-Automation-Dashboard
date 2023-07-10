@@ -9,7 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { Grid, Typography } from "@mui/material";
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WireframeDevices from "./wireframe-device.png";
 import "./Device.css";
 
@@ -68,30 +68,38 @@ function Device({ name, type }) {
 export default function RenderDevices() {
   // { loading, error, data, refetch }
   const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
-    variables: { id: "64ab1fe8fc66c11649bfbf92" },
+    variables: { id: "64ab3d1dad3cf2165027a442" },
   });
-  console.log(data);
 
-  const devices = [
-    {
-      name: "Philips GoLite",
-      type: "SmartLight",
-    },
-    {
-      name: "ThermoFrost",
-      type: "SmartThermo",
-    },
-    {
-      name: "Yamaha",
-      type: "SmartSpeaker",
-    },
-  ];
+  // localStorage
+  // redux Toolkit lets you switch between reducers.
+  // you would .combineReducers to initiate it
+  // window.roomId = "xxx"
+
+  useEffect(()=>{
+    if(!loading)
+      console.log({loading,error,data});
+  }, [loading, data])
+
+  // const devices = [
+  //   {
+  //     name: "Philips GoLite",
+  //     type: "SmartLight",
+  //   },
+  //   {
+  //     name: "ThermoFrost",
+  //     type: "SmartThermo",
+  //   },
+  //   {
+  //     name: "Yamaha",
+  //     type: "SmartSpeaker",
+  //   },
+  // ];
 
   // <Box sx={{ height: 300 }}>
 
   return (
     <>
-      {console.log(data)}
       {loading ? (
         "Please wait..."
       ) : (
@@ -111,7 +119,7 @@ export default function RenderDevices() {
             {/* {devices.map(devObject => { */}
             {/* data.devices ?? */}
 
-            {devices.map(({ type, name }, i) => {
+            {data?.roomDevices.map(({ type, name }, i) => {
               return (
                 <Device key={"device-" + i} type={type} name={name}></Device>
               );

@@ -11,7 +11,6 @@ const HomeProvider = ({ value = [], ...props }) => {
     devices: [],
     settings: {},
     ... value
-    // ?
   });
 
   return <Provider value={[state, dispatch]} {...props} />;
@@ -20,5 +19,7 @@ const HomeProvider = ({ value = [], ...props }) => {
 const useHomeContext = () => {
   return useContext(HomeContext);
 };
+
+//const DeviceProvider
 
 export { HomeProvider, useHomeContext };
