@@ -59,6 +59,10 @@ const RoomList = () => {
     return <h2>LOADING...</h2>;
   }
 
+  const handleRoomClick = () => {
+
+  }
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -72,6 +76,7 @@ const RoomList = () => {
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
+                  <a href={`/rooms/${room._id}`}>
                   <CardMedia
                     component="div"
                     sx={{
@@ -79,8 +84,9 @@ const RoomList = () => {
                       pt: '56.25%',
                     }}
                     image="https://source.unsplash.com/random?wallpapers"
-                    // onClick={handleRoomClick}
+                    value={room._id}
                   />
+                  </a>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {room.name}
