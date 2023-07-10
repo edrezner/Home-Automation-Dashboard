@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,6 +12,12 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { QUERY_HOME_ROOMS } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
+import { useHomeContext } from '../../utils/GlobalState';
+import {
+  UPDATE_CURRENT_ROOM
+} from '../../utils/actions';
 
 function Copyright() {
   return (
@@ -26,11 +32,33 @@ function Copyright() {
   );
 }
 
-const rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 const defaultTheme = createTheme();
 
-export default function Rooms() {
+const RoomList = () => {
+  const [state, dispatch] = useHomeContext();
+
+  const [room, setRoom] = React.useState('');
+
+  const { currentHome } = state;
+
+  const { loading, data } = useQuery(QUERY_HOME_ROOMS, {
+    variables: { id: currentHome }
+  });
+
+  // console.log(JSON.stringify(data.homeRooms[0]._id, 2, null));
+
+  // const handleChange = (event) => {
+  //   setRoom(event.target.value);
+  //   dispatch({
+  //     type: UPDATE_CURRENT_ROOM,
+  //     currentHome: event.target.value
+  //   });
+  // };
+
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -39,8 +67,8 @@ export default function Rooms() {
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {rooms.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {data?.homeRooms.map((room) => (
+              <Grid item key={room} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -51,13 +79,14 @@ export default function Rooms() {
                       pt: '56.25%',
                     }}
                     image="https://source.unsplash.com/random?wallpapers"
+                    // onClick={handleRoomClick}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Room Name
+                      {room.name}
                     </Typography>
                     <Typography>
-                      Room Type
+                      {room.type}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -88,3 +117,5 @@ export default function Rooms() {
     </ThemeProvider>
   );
 }
+
+export default RoomList;

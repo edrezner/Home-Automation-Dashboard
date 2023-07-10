@@ -40,20 +40,24 @@ function App() {
         <div>
           <HomeProvider>
 
-            {/* <Nav /> */}
-            <Routes>
-              <Route path='/' element={<Dashboard />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/signup' element={<Signup />} />
-              <Route path='/rooms/:id' element={<DevicePage />} />
-            </Routes>
-          </HomeProvider> 
+          {/* <Nav /> */}
+          <Routes>
+            <Route path='/' element={<Dashboard />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/devices' element={<DevicePage />} />
+            <Route path='/rooms/:id' element={<DevicePage />} />
+
+          </Routes>
+          </HomeProvider>
+
           {/* </HomeProvider> 
           /devices?deviceId=__ <- search params
           /devices/__ <- useLocation or window.location.href
           
           
           */}
+
         </div>
       </Router>
     </ApolloProvider>
