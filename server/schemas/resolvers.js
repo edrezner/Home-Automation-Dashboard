@@ -120,6 +120,12 @@ const resolvers = {
 
     addRoom: async (parent, args) => {
       const room = await Room.create(args);
+      const home = await Home.findByIdAndUpdate(args.home, {
+        $push: {rooms: room._id }
+      },
+      {
+        new: true
+      })
       return room;
     },
 
@@ -133,7 +139,12 @@ const resolvers = {
 
     addHome: async (parent, args) => {
       const home = await Home.create(args);
-      return home;
+      const user = await User.findByIdAndUpdate(args.user,{
+        $push: {homes: home._id}
+      },{
+        new:true,
+      })
+      return user;
     },
     deleteHome: async (parent, args) => {
       const { _id } = args;

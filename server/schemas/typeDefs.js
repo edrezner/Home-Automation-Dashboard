@@ -60,7 +60,7 @@ const typeDefs = gql`
       name: String!
       type: String!
       settings: SettingInput
-      roomId: ID
+      roomId: ID!
     ): Room
     updateDevice(
       _id: ID!
@@ -69,10 +69,10 @@ const typeDefs = gql`
       settings: SettingInput
     ): Device
     deleteDevice(_id: ID!): Device
-    addRoom(name: String!, type: String!): Room
+    addRoom(name: String!, type: String!, home: ID!): Room
     updateRoom(name: String!, type: String!): Room
     deleteRoom(_id: ID!): Room
-    addHome(name: String!, type: String!): Home
+    addHome(name: String!, user: ID!): User
     deleteHome(_id: ID!): Home
   }
 
