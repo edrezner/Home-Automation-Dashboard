@@ -1,5 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
+import { Link, useParams } from 'react-router-dom';
+import { useHomeContext } from '../utils/GlobalState';
 import Button from "@mui/material/Button";
 import { Stack, Slider } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -65,18 +67,30 @@ function Device({ name, type }) {
   );
 }
 // const roomId = "64ab1fe8fc66c11649bfbf92";
+// id: "64ab3d1dad3cf2165027a442"
 export default function RenderDevices() {
   // { loading, error, data, refetch }
+  const [state, dispatch] = useHomeContext();
+  const { id } = useParams();
+  const [currentDevice, setCurrentDevice] = useState({});
+
   const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
-    variables: { id: "64ab3d1dad3cf2165027a442" },
+    variables: { id: "64ab3d1dad3cf2165027a44" },
+    // TO DO: Use id from line 72 instead of hardcoded id
   });
+
+  const { devices, room } = state;
+
 
   // localStorage
   // redux Toolkit lets you switch between reducers.
   // you would .combineReducers to initiate it
   // window.roomId = "xxx"
 
-  useEffect(()=>{
+  useEffect(() => {
+    if (devices.length){
+      setCurrentDevice(devices.find((device) => device._id === id))
+    }
     if(!loading)
       console.log({loading,error,data});
   }, [loading, data])
