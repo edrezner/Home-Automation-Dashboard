@@ -75,7 +75,7 @@ export default function RenderDevices() {
   const [currentDevice, setCurrentDevice] = useState({});
 
   const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
-    variables: { id: "64ab3d1dad3cf2165027a44" },
+    variables: { id: id },
     // TO DO: Use id from line 72 instead of hardcoded id
   });
 
