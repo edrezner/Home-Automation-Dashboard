@@ -10,10 +10,12 @@ const HomeProvider = ({ value = [], ...props }) => {
     rooms: [],
     devices: [],
     settings: {},
+
     currentHome: "",
     currentRoom: "",
     ...value
     // ?
+>>>>>>>>> Temporary merge branch 2
   });
 
   return <Provider value={[state, dispatch]} {...props} />;
