@@ -16,8 +16,6 @@ const HomeList = () => {
   const handleChange = (event) => {
     setHome(event.target.value);
   };
-  console.log(userData);
-  console.log("hello");
 
   if (loading) {
     return <h2>LOADING...</h2>;
@@ -35,11 +33,11 @@ const HomeList = () => {
           autoWidth
           label="Home"
         >
-          {/* {userData.homes.map((home) => {
+          {userData.homes.map((home) => {
             return (
               <MenuItem value={home._id}>{home.name}</MenuItem>
             )
-          })} */}
+          })}
           <MenuItem value={10}>Evan's Estate</MenuItem>
           <MenuItem value={21}>Eric's Estate</MenuItem>
           <MenuItem value={22}>Pablo's Penthouse</MenuItem>

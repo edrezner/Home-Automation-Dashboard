@@ -15,3 +15,6 @@ export const REMOVE_DEVICE = "REMOVE_DEVICE";
 
 // To update a device's settings
 export const UPDATE_SETTINGS = "UPDATE_SETTINGS";
+
+export const UPDATE_CURRENT_HOME = "UPDATE_CURRENT_HOME"
+export const UPDATE_CURRENT_ROOM = "UPDATE_CURRENT_ROOM"
