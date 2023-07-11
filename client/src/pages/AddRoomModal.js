@@ -44,8 +44,10 @@ export default function AddRoomModal() {
     event.preventDefault();
     const { name, type, currentHome } = room;
 
+    const home = state.currentHome;
+
     const result = await addRoom({
-      variables: { name, type, home: currentHome },
+      variables: { name, type, home },
     });
 
     if (error) {
