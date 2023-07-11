@@ -24,6 +24,17 @@ export default function AddDeviceModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [device, setDevice] = React.useState({
+    name: "",
+    type: "",
+    settings: {}, // update this field with proper values with Pablo's functions
+    roomId: "",
+  });
+
+  function handleInputChange(e) {
+    const name = e.target.name;
+    setDevice({ ...device, [name]: e.target.value });
+  }
 
   return (
     <div>
@@ -44,16 +55,18 @@ export default function AddDeviceModal() {
           <form>
             <TextField
               label="Name"
-              // value={name}
-              // onChange={handleNameChange}
+              value={device.name}
+              onChange={handleInputChange}
+              name="name"
               // fullWidth
               // required
             />
             <TextField
               select
               label="Type"
-              // value={type}
-              // onChange={handleTypeChange}
+              value={device.type}
+              onChange={handleInputChange}
+              name="type"
               // fullWidth
               // required
             >
@@ -72,3 +85,5 @@ export default function AddDeviceModal() {
 
 // onSubmit={handleSubmit}
 // disabled={loading}
+// next step; when submit send data to GQL
+// onClick function that does the mutation
