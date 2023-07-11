@@ -15,7 +15,7 @@ import {
 
 const HomeList = () => {
   const [state, dispatch] = useHomeContext();
-
+  const { currentHome } = state
   const [home, setHome] = React.useState('');
   const { loading, data } = useQuery(QUERY_USER);
   const userData = data?.me || data?.user || {};

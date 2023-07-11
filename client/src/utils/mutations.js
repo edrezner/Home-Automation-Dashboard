@@ -118,8 +118,8 @@ export const UPDATE_ROOM = gql`
 `;
 
 export const DELETE_ROOM = gql`
-  mutation deleteRoom($_id: ID!) {
-    deleteRoom(_id: $_id) {
+  mutation deleteRoom($_id: ID!, $homeId: ID!) {
+    deleteRoom(_id: $_id, homeId: $homeId) {
       _id
       name
       type
