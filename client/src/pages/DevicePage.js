@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { Link, useParams } from 'react-router-dom';
-import { useHomeContext } from '../utils/GlobalState';
+import { Link, useParams } from "react-router-dom";
+import { useHomeContext } from "../utils/GlobalState";
 import Button from "@mui/material/Button";
 import { Stack, Slider } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -14,6 +14,8 @@ import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import WireframeDevices from "./wireframe-device.png";
 import "./Device.css";
+import { Modal } from "@mui/material";
+import AddDeviceModal from "./AddDeviceModal";
 
 import Speaker from "../components/Speaker/Speaker";
 import Thermostat from "../components/Thermostat/Thermostat";
@@ -69,48 +71,21 @@ function Device({ name, type }) {
 // const roomId = "64ab1fe8fc66c11649bfbf92";
 // id: "64ab3d1dad3cf2165027a442"
 export default function RenderDevices() {
-  // { loading, error, data, refetch }
   const [state, dispatch] = useHomeContext();
   const { id } = useParams();
   const [currentDevice, setCurrentDevice] = useState({});
-
   const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
     variables: { id: id },
-    // TO DO: Use id from line 72 instead of hardcoded id
   });
-
-  const { devices, room } = state;
-
-
-  // localStorage
-  // redux Toolkit lets you switch between reducers.
-  // you would .combineReducers to initiate it
-  // window.roomId = "xxx"
+  const { devices, rooms } = state;
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (devices.length){
-      setCurrentDevice(devices.find((device) => device._id === id))
+    if (devices.length) {
+      setCurrentDevice(devices.find((device) => device._id === id));
     }
-    if(!loading)
-      console.log({loading,error,data});
-  }, [loading, data])
-
-  // const devices = [
-  //   {
-  //     name: "Philips GoLite",
-  //     type: "SmartLight",
-  //   },
-  //   {
-  //     name: "ThermoFrost",
-  //     type: "SmartThermo",
-  //   },
-  //   {
-  //     name: "Yamaha",
-  //     type: "SmartSpeaker",
-  //   },
-  // ];
-
-  // <Box sx={{ height: 300 }}>
+    if (!loading) console.log({ loading, error, data });
+  }, [loading, data]);
 
   return (
     <>
@@ -129,10 +104,7 @@ export default function RenderDevices() {
               Logout
             </button>
           </Stack>
-          <div sx={{ height: 300 }}>
-            {/* {devices.map(devObject => { */}
-            {/* data.devices ?? */}
-
+          <div style={{ height: 300 }}>
             {data?.roomDevices.map(({ type, name }, i) => {
               return (
                 <Device key={"device-" + i} type={type} name={name}></Device>
@@ -140,7 +112,8 @@ export default function RenderDevices() {
             })}
           </div>
           <hr />
-          <img src={WireframeDevices}></img>
+          <img src={WireframeDevices} alt="Wireframe Devices" />
+          <AddDeviceModal />
         </>
       )}
     </>
