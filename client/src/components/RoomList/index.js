@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -20,6 +21,7 @@ import { getRoomImage } from '../../utils/getImages';
 import Auth from '../../utils/auth';
 import { REMOVE_ROOM } from "../../utils/actions";
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -37,8 +39,9 @@ const defaultTheme = createTheme();
 
 const RoomList = () => {
   const [state, dispatch] = useHomeContext();
-
+  
   const [room, setRooms] = React.useState('');
+
 
   const { rooms, currentHome } = state;
 
@@ -123,7 +126,9 @@ const RoomList = () => {
                     <Typography>{room.type}</Typography>
                   </CardContent>
                   <CardActions>
+
                     <Button size="small" onClick={() => handleDeleteRoom(room._id)}><RemoveCircleOutlineIcon /></Button>
+
                   </CardActions>
                 </Card>
               </Grid>

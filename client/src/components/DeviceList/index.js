@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { QUERY_ROOM_DEVICES } from "../../utils/queries";
 import { getDeviceImage } from "../../utils/getImages";
+
 import { useQuery } from "@apollo/client";
 import { useHomeContext } from "../../utils/GlobalState";
 import { UPDATE_CURRENT_ROOM } from "../../utils/actions";
