@@ -1,7 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { Device, Home, Room, Setting, User } = require("../models");
 const { signToken } = require("../utils/auth");
-const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 const resolvers = {
   Query: {
@@ -136,6 +135,19 @@ const resolvers = {
         new: true,
       });
       return updatedRoom;
+    },
+
+    deleteRoom: async (parent, args) => {
+      const { _id, homeId } = args;
+      const deletedRoom = await Room.findByIdAndRemove(_id);
+      const home = await Home.findOneAndUpdate(
+        { _id: homeId },
+        {
+          $pull: { rooms: _id  }
+        },
+        { new: true }
+      )
+      return deletedRoom;
     },
 
     addHome: async (parent, args) => {
