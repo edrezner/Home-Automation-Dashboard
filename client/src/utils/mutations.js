@@ -42,15 +42,18 @@ export const ADD_DEVICE = gql`
   ) {
     addDevice(name: $name, type: $type, settings: $settings, roomId: $roomId) {
       _id
-      name
-      type
-      settings {
+      devices {
         _id
-        isOn
-        temperature
-        brightness
-        color
-        volume
+        name
+        type
+        settings {
+          _id
+          isOn
+          temperature
+          brightness
+          color
+          volume
+        }
       }
     }
   }
@@ -98,8 +101,8 @@ export const DELETE_DEVICE = gql`
 `;
 
 export const ADD_ROOM = gql`
-  mutation addRoom($name: String!, $type: String!) {
-    addRoom(name: $name, type: $type) {
+  mutation addRoom($name: String!, $type: String!, $home: ID!) {
+    addRoom(name: $name, type: $type, home: $home) {
       _id
       name
       type

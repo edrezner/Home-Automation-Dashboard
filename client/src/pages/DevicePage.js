@@ -23,7 +23,7 @@ import TvWidget from "../components/Switch";
 
 import { useQuery, useMutation } from "@apollo/client";
 // TODO: Correct module package
-import { QUERY_ROOM_DEVICES } from "../utils/queries";
+import { QUERY_ROOM } from "../utils/queries";
 
 // function Device({ name, type }) {
 //   const putaway = (
@@ -58,7 +58,7 @@ export default function RenderDevices() {
   const [state, dispatch] = useHomeContext();
   const { id } = useParams();
   const [currentDevice, setCurrentDevice] = useState({});
-  const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
+  const { loading, error, data } = useQuery(QUERY_ROOM, {
     variables: { id: id },
   });
   const { devices, rooms } = state;
@@ -105,7 +105,7 @@ export default function RenderDevices() {
             {/* {devices.map(devObject => { */}
             {/* data.devices ?? */}
 
-            {data?.roomDevices.map(({ type, name, _id }, i) => {
+            {data?.room?.devices.map(({ type, name, _id }, i) => {
               return widgetRenderer(type);
             })}
           </div>
