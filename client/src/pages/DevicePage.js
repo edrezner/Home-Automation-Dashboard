@@ -12,64 +12,48 @@ import Switch from "@mui/material/Switch";
 import { Grid, Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
-import WireframeDevices from "./wireframe-device.png";
 import "./Device.css";
 import { Modal } from "@mui/material";
 import AddDeviceModal from "./AddDeviceModal";
 
-import Speaker from "../components/Speaker/Speaker";
-import Thermostat from "../components/Thermostat/Thermostat";
-import SwitchDevice from "../components/Switch/Switch";
+import LightWidget from "../components/Brightness";
+import SpeakerWidget from "../components/Speaker";
+import TempWidget from "../components/Thermostat";
+import TvWidget from "../components/Switch";
 
 import { useQuery, useMutation } from "@apollo/client";
 // TODO: Correct module package
 import { QUERY_ROOM_DEVICES } from "../utils/queries";
 
-// const styles = {
-//   deviceContainer: css`
-//     padding: 16px;
-//     background-color: #f5f5f5;
-//   `,
-//   deviceCard: css`
-//     padding: 16px;
-//     margin-bottom: 16px;
-//     background-color: #ffffff;
-//     border: 1px solid #e0e0e0;
-//     border-radius: 4px;
-//   `,
-//   deviceName: css`
-//     font-weight: bold;
-//   `,
-// };
+// function Device({ name, type }) {
+//   const putaway = (
+//     <>
+//       <div>
+//         <ul>
+//           <li>
+//             <b>Name: </b>
+//             <span>{name}</span>
+//           </li>
+//           <li>
+//             <b>Type: </b>
+//             <span>{type}</span>
+//           </li>
+//         </ul>
+//       </div>
+//     </>
+//   );
 
-function Device({ name, type }) {
-  const putaway = (
-    <>
-      <div>
-        <ul>
-          <li>
-            <b>Name: </b>
-            <span>{name}</span>
-          </li>
-          <li>
-            <b>Type: </b>
-            <span>{type}</span>
-          </li>
-        </ul>
-      </div>
-    </>
-  );
+//   return (
+//     <>
+//       {type === "Lights" && <SwitchDevice name={name} />}
+//       {type === "Temp" && <Thermostat name={name} />}
+//       {type === "Speakers" && <Speaker name={name} />}
+//     </>
+//   );
+// }
 
-  return (
-    <>
-      {type === "Lights" && <SwitchDevice name={name} />}
-      {type === "Temp" && <Thermostat name={name} />}
-      {type === "Speakers" && <Speaker name={name} />}
-    </>
-  );
-}
-// const roomId = "64ab1fe8fc66c11649bfbf92";
-// id: "64ab3d1dad3cf2165027a442"
+// If error, check if it works without ()
+
 export default function RenderDevices() {
   const [state, dispatch] = useHomeContext();
   const { id } = useParams();
@@ -86,6 +70,19 @@ export default function RenderDevices() {
     }
     if (!loading) console.log({ loading, error, data });
   }, [loading, data]);
+
+  function widgetRenderer(deviceType) {
+    switch (deviceType) {
+      case "Thermostat":
+        return <TempWidget />;
+      case "Lights":
+        return <LightWidget />;
+      case "Television":
+        return <TvWidget />;
+      case "Speakers":
+        return <SpeakerWidget />;
+    }
+  }
 
   return (
     <>
@@ -104,15 +101,16 @@ export default function RenderDevices() {
               Logout
             </button>
           </Stack>
-          <div style={{ height: 300 }}>
-            {data?.roomDevices.map(({ type, name }, i) => {
-              return (
-                <Device key={"device-" + i} type={type} name={name}></Device>
-              );
+          <div sx={{ height: 300 }}>
+            {/* {devices.map(devObject => { */}
+            {/* data.devices ?? */}
+
+            {data?.roomDevices.map(({ type, name, _id }, i) => {
+              return widgetRenderer(type);
             })}
           </div>
           <hr />
-          <img src={WireframeDevices} alt="Wireframe Devices" />
+
           <AddDeviceModal />
         </>
       )}
