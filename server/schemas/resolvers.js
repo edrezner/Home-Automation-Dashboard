@@ -10,32 +10,42 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in");
     },
-    homeDevices: async (parent, { _id }) => {
-      const home = await Home.findById(_id).populate({
-        path: "devices",
-        // populate: "settings",
-        populate: {
-          path: "settings",
-        },
-      });
-      console.log(home.devices);
-      return home.devices;
-    },
-    roomDevices: async (parent, { _id }) => {
-      const room = await Room.findById(_id).populate({
-        path: "devices",
-        populate: "settings",
-        // populate: {
-        //   path: "settings"
-        // }
-      });
+    // homeDevices: async (parent, { _id }) => {
+    //   const home = await Home.findById(_id).populate({
+    //     path: "devices",
+    //     // populate: "settings",
+    //     populate: {
+    //       path: "settings",
+    //     },
+    //   });
+    //   console.log(home.devices);
+    //   return home.devices;
+    // },
+    room: async (parent, { _id }) => {
+      const room = await Room.findById(_id)
+        .populate({
+          path: "devices",
+          populate: "settings",
+          // populate: {
+          //   path: "settings"
+          // }
+        })
+        .populate("home");
       // const room = await Room.findById(_id).populate("devices","settings",);
       // console.log(room.devices)
-      return room.devices;
+      return room;
     },
-    homeRooms: async (parent, { _id }) => {
-      const home = await Home.findById(_id).populate("rooms");
-      return home.rooms;
+    home: async (parent, { _id }) => {
+      const home = await Home.findById(_id)
+        .populate("rooms")
+        .populate({
+          path: "devices",
+          // populate: "settings",
+          populate: {
+            path: "settings",
+          },
+        });
+      return home;
     },
   },
 
@@ -43,7 +53,7 @@ const resolvers = {
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
-      
+
       return { token, user };
     },
     updateUser: async (parent, args, context) => {
@@ -90,10 +100,12 @@ const resolvers = {
         settings: args.settings,
       });
 
-      const room = await Room.findById(args.roomId);
-      room.devices.push(device._id);
-      const newRoom = await room.save();
-      return await newRoom;
+      const room = await Room.findByIdAndUpdate(
+        args.roomId,
+        { $addToSet: { devices: device._id } },
+        { runValidators: true, new: true }
+      ).populate("devices");
+      return room;
     },
 
     updateDevice: async (parent, args) => {
@@ -120,12 +132,15 @@ const resolvers = {
 
     addRoom: async (parent, args) => {
       const room = await Room.create(args);
-      const home = await Home.findByIdAndUpdate(args.home, {
-        $push: {rooms: room._id }
-      },
-      {
-        new: true
-      })
+      const home = await Home.findByIdAndUpdate(
+        args.home,
+        {
+          $push: { rooms: room._id },
+        },
+        {
+          new: true,
+        }
+      );
       return room;
     },
 
@@ -143,20 +158,24 @@ const resolvers = {
       const home = await Home.findOneAndUpdate(
         { _id: homeId },
         {
-          $pull: { rooms: _id  }
+          $pull: { rooms: _id },
         },
         { new: true }
-      )
+      );
       return deletedRoom;
     },
 
     addHome: async (parent, args) => {
       const home = await Home.create(args);
-      const user = await User.findByIdAndUpdate(args.user,{
-        $push: {homes: home._id}
-      },{
-        new:true,
-      })
+      const user = await User.findByIdAndUpdate(
+        args.user,
+        {
+          $push: { homes: home._id },
+        },
+        {
+          new: true,
+        }
+      );
       return user;
     },
     deleteHome: async (parent, args) => {

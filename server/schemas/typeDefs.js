@@ -12,6 +12,7 @@ const typeDefs = gql`
     _id: ID
     name: String
     user: User
+    rooms: [Room]
     devices: [Device]
   }
 
@@ -20,7 +21,7 @@ const typeDefs = gql`
     name: String
     type: String
     home: Home
-    devices: [ID]
+    devices: [Device]
   }
 
   type Device {
@@ -46,9 +47,8 @@ const typeDefs = gql`
 
   type Query {
     user: User
-    homeDevices(_id: ID): [Device]
-    roomDevices(_id: ID): [Device]
-    homeRooms(_id: ID): [Room]
+    room(_id: ID): Room
+    home(_id: ID): Home
   }
 
   type Mutation {

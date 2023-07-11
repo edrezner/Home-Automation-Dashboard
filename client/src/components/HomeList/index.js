@@ -1,22 +1,20 @@
-import React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
+import React from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
-import { QUERY_USER } from '../../utils/queries';
-import { useQuery } from '@apollo/client';
-import { useHomeContext } from '../../utils/GlobalState';
-import {
-  UPDATE_CURRENT_HOME
-} from '../../utils/actions';
+import { QUERY_USER } from "../../utils/queries";
+import { useQuery } from "@apollo/client";
+import { useHomeContext } from "../../utils/GlobalState";
+import { UPDATE_CURRENT_HOME } from "../../utils/actions";
 
 const HomeList = () => {
   const [state, dispatch] = useHomeContext();
-  const { currentHome } = state
-  const [home, setHome] = React.useState('');
+  const { currentHome } = state;
+  const [home, setHome] = React.useState("");
   const { loading, data } = useQuery(QUERY_USER);
   const userData = data?.me || data?.user || {};
 
@@ -24,7 +22,7 @@ const HomeList = () => {
     setHome(event.target.value);
     dispatch({
       type: UPDATE_CURRENT_HOME,
-      currentHome: event.target.value
+      currentHome: event.target.value,
     });
   };
 
@@ -45,18 +43,18 @@ const HomeList = () => {
           label="Home"
         >
           {userData.homes?.map((home) => {
-            return (
-              <MenuItem value={home._id}>{home.name}</MenuItem>
-            )
+            return <MenuItem value={home._id}>{home.name}</MenuItem>;
           })}
-          <MenuItem value={10}>Evan's Estate</MenuItem>
-          <MenuItem value={21}>Eric's Estate</MenuItem>
-          <MenuItem value={22}>Pablo's Penthouse</MenuItem>
+          <MenuItem value={"64ab1fe8fc66c11649bfbf95"}>Evan's Estate</MenuItem>
+          {/* <MenuItem value={21}>Eric's Estate</MenuItem>
+          <MenuItem value={22}>Pablo's Penthouse</MenuItem> */}
         </Select>
       </FormControl>
-      <Fab color="primary" aria-label="add"><AddIcon /></Fab>
+      <Fab color="primary" aria-label="add">
+        <AddIcon />
+      </Fab>
     </div>
   );
-}
+};
 
 export default HomeList;

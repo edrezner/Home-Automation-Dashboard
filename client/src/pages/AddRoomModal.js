@@ -6,9 +6,8 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { useMutation } from "@apollo/client";
-import { ADD_DEVICE } from "../utils/mutations";
-import { defaultSettings } from "../utils/defaultSettings";
-import { useParams } from "react-router-dom";
+import { ADD_ROOM } from "../utils/mutations";
+import { useHomeContext } from "../utils/GlobalState";
 
 const style = {
   position: "absolute",
@@ -22,27 +21,31 @@ const style = {
   p: 4,
 };
 
-export default function AddDeviceModal() {
+export default function AddRoomModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [addDevice, { error }] = useMutation(ADD_DEVICE);
-  const [device, setDevice] = React.useState({
+  const [addRoom, { error }] = useMutation(ADD_ROOM);
+  const [room, setRoom] = React.useState({
     name: "",
     type: "",
-    settings: {}, // update this field with proper values with Pablo's functions
+    settings: {},
     roomId: "",
   });
 
-  const { id } = useParams();
+  const [state, dispatch] = useHomeContext();
 
-  const handleAddDevice = async (event) => {
+  // const [room, setRooms] = React.useState('');
+
+  const { currentHome } = state;
+  console.log(currentHome);
+
+  const handleAddRoom = async (event) => {
     event.preventDefault();
-    const { name, type, settings, roomId } = device;
-    const settingsObject = { ...defaultSettings(type), ...settings };
+    const { name, type, currentHome } = room;
 
-    const result = await addDevice({
-      variables: { name, type, settings: settingsObject, roomId: id },
+    const result = await addRoom({
+      variables: { name, type, home: currentHome },
     });
 
     if (error) {
@@ -54,7 +57,7 @@ export default function AddDeviceModal() {
 
   function handleInputChange(e) {
     const name = e.target.name;
-    setDevice({ ...device, [name]: e.target.value });
+    setRoom({ ...room, [name]: e.target.value });
   }
 
   return (
@@ -76,7 +79,7 @@ export default function AddDeviceModal() {
           <form>
             <TextField
               label="Name"
-              value={device.name}
+              value={room.name}
               onChange={handleInputChange}
               name="name"
               // fullWidth
@@ -85,18 +88,17 @@ export default function AddDeviceModal() {
             <TextField
               select
               label="Type"
-              value={device.type}
+              value={room.type}
               onChange={handleInputChange}
               name="type"
               // fullWidth
               // required
             >
-              <MenuItem value="Television">Television</MenuItem>
-              <MenuItem value="Speakers">Speakers</MenuItem>
-              <MenuItem value="Lights">Lights</MenuItem>
-              <MenuItem value="Thermostat">Thermostat</MenuItem>
+              <MenuItem value="Living Room">Living Room</MenuItem>
+              <MenuItem value="Bedroom">Bedroom</MenuItem>
+              <MenuItem value="Kitchen">Kitchen</MenuItem>
             </TextField>
-            <Button type="submit" onClick={handleAddDevice}>
+            <Button type="submit" onClick={handleAddRoom}>
               Add
             </Button>
           </form>

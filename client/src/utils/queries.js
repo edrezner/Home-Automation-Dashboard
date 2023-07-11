@@ -16,46 +16,61 @@ export const QUERY_USER = gql`
 
 export const QUERY_HOME_DEVICES = gql`
   query homeDevices($id: ID!) {
-    homeDevices(_id: $id) {
+    home(_id: $id) {
       _id
-      name
-      type
-      settings {
+      devices {
         _id
-        isOn
-        temperature
-        brightness
-        color
-        volume
+        name
+        type
+        settings {
+          _id
+          isOn
+          temperature
+          brightness
+          color
+          volume
+        }
       }
     }
   }
 `;
 
-export const QUERY_ROOM_DEVICES = gql`
-  query roomDevices($id: ID!){
-    roomDevices(_id: $id){
+export const QUERY_ROOM = gql`
+  query room($id: ID!) {
+    room(_id: $id) {
       _id
+      home {
+        _id
+        name
+      }
       name
       type
-      settings{
+      devices {
         _id
-        isOn
-        temperature
-        brightness
-        color
-        volume
+        name
+        type
+        settings {
+          _id
+          isOn
+          temperature
+          brightness
+          color
+          volume
+        }
       }
     }
   }
 `;
 
 export const QUERY_HOME_ROOMS = gql`
-  query homeRooms ($id: ID!){
-    homeRooms(_id: $id) {
+  query home($id: ID!) {
+    home(_id: $id) {
       _id
-      name
-      type
+      rooms {
+        _id
+        name
+        type
+      }
     }
   }
 `;
