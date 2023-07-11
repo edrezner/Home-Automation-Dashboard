@@ -23,14 +23,15 @@ const resolvers = {
       return home.devices;
     },
     roomDevices: async (parent, { _id }) => {
-      // const room = await Room.findById(_id).populate({
-      //   path: "devices",
-      //   populate: "settings",
-      //   // populate: {
-      //   //   path: "settings"
-      //   // }
-      // });
-      const room = await Room.findById(_id).populate("devices","settings",);
+      const room = await Room.findById(_id).populate({
+        path: "devices",
+        populate: "settings",
+        // populate: {
+        //   path: "settings"
+        // }
+      });
+      // const room = await Room.findById(_id).populate("devices","settings",);
+      // console.log(room.devices)
       return room.devices;
     },
     homeRooms: async (parent, { _id }) => {

@@ -2,7 +2,7 @@ import * as React from "react";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-export default function ControlledSwitches({ name }) {
+export default function TvWidget({ name }) {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event) => {
