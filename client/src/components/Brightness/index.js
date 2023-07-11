@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
-export default function VerticalAccessibleSlider() {
+export default function LightWidget() {
   function preventHorizontalKeyboardNavigation(event) {
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
@@ -18,8 +18,8 @@ export default function VerticalAccessibleSlider() {
           },
         }}
         orientation="vertical"
-        defaultValue={30}
-        aria-label="Temperature"
+        defaultValue={50}
+        aria-label="Luminosity"
         valueLabelDisplay="auto"
         onKeyDown={preventHorizontalKeyboardNavigation}
       />

@@ -18,6 +18,7 @@ import { useQuery } from "@apollo/client";
 import { useHomeContext } from "../../utils/GlobalState";
 import { UPDATE_CURRENT_ROOM } from "../../utils/actions";
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">

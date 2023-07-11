@@ -25,11 +25,11 @@ function valuetext(value) {
   return `${value}°F`;
 }
 
-export default function DiscreteSliderLabel({ name }) {
+export default function TempWidget({ name }) {
   return (
     <div sx={{ width: 300 }}>
       <Slider
-        aria-label="Always visible"
+        aria-label="Temperature"
         orientation="vertical"
         defaultValue={70}
         getAriaValueText={valuetext}
