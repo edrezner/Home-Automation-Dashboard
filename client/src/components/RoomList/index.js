@@ -1,21 +1,26 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { QUERY_HOME_ROOMS } from "../../utils/queries";
-import { useQuery } from "@apollo/client";
-import { useHomeContext } from "../../utils/GlobalState";
-import { UPDATE_CURRENT_ROOM } from "../../utils/actions";
+
+import React from 'react';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Link from '@mui/material/Link';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { QUERY_HOME_ROOMS } from '../../utils/queries';
+import { DELETE_ROOM } from '../../utils/mutations';
+import { useQuery, useMutation } from '@apollo/client';
+import { useHomeContext } from '../../utils/GlobalState';
+import { getRoomImage } from '../../utils/getImages';
+import Auth from '../../utils/auth';
+import { REMOVE_ROOM } from "../../utils/actions";
+
 
 function Copyright() {
   return (
@@ -34,10 +39,11 @@ const defaultTheme = createTheme();
 
 const RoomList = () => {
   const [state, dispatch] = useHomeContext();
+  
+  const [room, setRooms] = React.useState('');
 
-  const [room, setRoom] = React.useState("");
 
-  const { currentHome } = state;
+  const { rooms, currentHome } = state;
 
   const { loading, data } = useQuery(QUERY_HOME_ROOMS, {
     variables: { id: currentHome },
@@ -53,11 +59,37 @@ const RoomList = () => {
   //   });
   // };
 
+  const [deleteRoom, { error }] = useMutation(DELETE_ROOM)
+
+  const handleDeleteRoom = async (_id) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const response = await deleteRoom({
+        variables: { _id, homeId:currentHome }
+      });
+      console.log(response);
+      if (!response) {
+        throw new Error('something went wrong!');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    dispatch({
+      type: REMOVE_ROOM,
+      _id: _id
+    });
+    console.log(state);
+  };
+
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-
-  const handleRoomClick = () => {};
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -77,15 +109,15 @@ const RoomList = () => {
                   }}
                 >
                   <a href={`/rooms/${room._id}`}>
-                    <CardMedia
-                      component="div"
-                      sx={{
-                        // 16:9
-                        pt: "56.25%",
-                      }}
-                      image="https://source.unsplash.com/random?wallpapers"
-                      value={room._id}
-                    />
+                  <CardMedia
+                    component="div"
+                    sx={{
+                      // 16:9
+                      pt: '56.25%',
+                    }}
+                    image={getRoomImage(room.type)}
+                    value={room._id}
+                  />
                   </a>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
@@ -94,9 +126,9 @@ const RoomList = () => {
                     <Typography>{room.type}</Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">
-                      <RemoveCircleOutlineIcon />
-                    </Button>
+
+                    <Button size="small" onClick={() => handleDeleteRoom(room._id)}><RemoveCircleOutlineIcon /></Button>
+
                   </CardActions>
                 </Card>
               </Grid>
