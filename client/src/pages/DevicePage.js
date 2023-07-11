@@ -13,10 +13,8 @@ import { Grid, Typography } from "@mui/material";
 import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import "./Device.css";
-// import { LightWidget } from "../components/Brightness";
-// import { SpeakerWidget } from "../components/Speaker";
-// import { TvWidget } from "../components/Switch";
-// import { TempWidget } from "../Components/Thermostat";
+import { Modal } from "@mui/material";
+import AddDeviceModal from "./AddDeviceModal";
 
 import LightWidget from "../components/Brightness";
 import SpeakerWidget from "../components/Speaker";
@@ -57,16 +55,14 @@ import { QUERY_ROOM_DEVICES } from "../utils/queries";
 // If error, check if it works without ()
 
 export default function RenderDevices() {
-  // { loading, error, data, refetch }
   const [state, dispatch] = useHomeContext();
   const { id } = useParams();
   const [currentDevice, setCurrentDevice] = useState({});
-
   const { loading, error, data } = useQuery(QUERY_ROOM_DEVICES, {
     variables: { id: id },
   });
-
-  const { devices, room } = state;
+  const { devices, rooms } = state;
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (devices.length) {
@@ -110,12 +106,12 @@ export default function RenderDevices() {
             {/* data.devices ?? */}
 
             {data?.roomDevices.map(({ type, name, _id }, i) => {
-              return (
-                  widgetRenderer(type)
-              );
+              return widgetRenderer(type);
             })}
           </div>
           <hr />
+
+          <AddDeviceModal />
         </>
       )}
     </>
