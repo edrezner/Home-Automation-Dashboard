@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import { QUERY_HOME_ROOMS } from "../../utils/queries";
 import { DELETE_ROOM } from "../../utils/mutations";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
@@ -20,6 +20,9 @@ import { getRoomImage } from "../../utils/getImages";
 import Auth from "../../utils/auth";
 import { REMOVE_ROOM } from "../../utils/actions";
 import AddRoomModal from "../../pages/AddRoomModal";
+import { red } from "@mui/material/colors";
+import IconButton from "@mui/material/IconButton";
+import houseImage from "../../assets/images/homepage.png";
 
 function Copyright() {
   return (
@@ -39,13 +42,11 @@ const defaultTheme = createTheme();
 const RoomList = () => {
   const [state, dispatch] = useHomeContext();
 
-  const [room, setRooms] = React.useState('');
+  const [room, setRoom] = React.useState("");
   const { currentHome } = state;
   const { loading, data } = useQuery(QUERY_HOME_ROOMS, {
     variables: { id: currentHome },
   });
-
-  console.log(currentHome, data);
 
   // const [getRooms, {data}] = useLazyQuery(QUERY_HOME_ROOMS)
 
@@ -78,7 +79,7 @@ const RoomList = () => {
 
   const handleDeleteRoom = async (_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
+    
     if (!token) {
       return false;
     }
@@ -87,10 +88,11 @@ const RoomList = () => {
       const response = await deleteRoom({
         variables: { _id, homeId: currentHome },
       });
-      console.log(response);
+
       if (!response) {
         throw new Error("something went wrong!");
       }
+
     } catch (err) {
       console.error(err);
     }
@@ -114,49 +116,75 @@ const RoomList = () => {
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {data?.home?.rooms.map((room) => (
-              <Grid item key={room} xs={12} sm={6} md={4}>
-                <Card
+            {data?.home?.rooms.map((room) => {
+              return (
+                <Grid item key={room} xs={12} sm={6} md={4}>
+                  <Card
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <a href={`/rooms/${room._id}`}>
+                      <CardMedia
+                        component="div"
+                        sx={{
+                          // 16:9
+                          pt: "56.25%",
+                        }}
+                        image={getRoomImage(room.type)}
+                        value={room._id}
+                      />
+                    </a>
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {room.name}
+                      </Typography>
+                      <Typography>{room.type}</Typography>
+                    </CardContent>
+                    <CardActions>
+                      <IconButton onClick={() => handleDeleteRoom(room._id)}>
+                        <RemoveCircle sx={{ color: red[500] }} />
+                      </IconButton>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              );
+            })}
+            <Grid item key={room} xs={12} sm={6} md={4}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <CardMedia
+                  component="div"
                   sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
+                    // 16:9
+                    pt: "56.25%",
                   }}
-                >
-                  <a href={`/rooms/${room._id}`}>
-                    <CardMedia
-                      component="div"
-                      sx={{
-                        // 16:9
-                        pt: "56.25%",
-                      }}
-                      image={getRoomImage(room.type)}
-                      value={room._id}
-                    />
-                  </a>
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {room.name}
-                    </Typography>
-                    <Typography>{room.type}</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      onClick={() => handleDeleteRoom(room._id)}
-                    >
-                      <RemoveCircleOutlineIcon />
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+                  image={houseImage}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Add Room
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <AddRoomModal />
+                </CardActions>
+              </Card>
+            </Grid>
           </Grid>
           <AddRoomModal/>
         </Container>
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
@@ -168,6 +196,7 @@ const RoomList = () => {
         >
           Developed by Group 4. All rights reserved.
         </Typography>
+
         {/* <AddRoomModal loadRooms={loadRooms} /> */}
         <Copyright />
       </Box>
