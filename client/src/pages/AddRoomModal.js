@@ -1,4 +1,5 @@
 import * as React from "react";
+import { css } from "@emotion/react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -8,8 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { useMutation } from "@apollo/client";
 import { ADD_ROOM } from "../utils/mutations";
 import { useHomeContext } from "../utils/GlobalState";
-import IconButton from '@mui/material/IconButton';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import IconButton from "@mui/material/IconButton";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const style = {
   position: "absolute",
@@ -23,7 +24,7 @@ const style = {
   p: 4,
 };
 
-export default function AddRoomModal({loadRooms}) {
+export default function AddRoomModal({ loadRooms }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -56,8 +57,7 @@ export default function AddRoomModal({loadRooms}) {
       console.error(error);
     } else {
       console.log(result);
-      setOpen(false) /// close modal
-      // loadRooms()
+      setOpen(false);
     }
   };
 
@@ -68,8 +68,9 @@ export default function AddRoomModal({loadRooms}) {
 
   return (
     <div>
-
-      <IconButton onClick={handleOpen}><AddCircleIcon color="primary"/></IconButton>
+      <IconButton onClick={handleOpen}>
+        <AddCircleIcon color="primary" />
+      </IconButton>
 
       <Modal
         open={open}
@@ -79,12 +80,10 @@ export default function AddRoomModal({loadRooms}) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-
             Add a New Room
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Enter a name and select the Room Type
-
           </Typography>
           <form>
             <TextField
@@ -92,8 +91,8 @@ export default function AddRoomModal({loadRooms}) {
               value={room.name}
               onChange={handleInputChange}
               name="name"
-              // fullWidth
-              // required
+              fullWidth
+              required
             />
             <TextField
               select
@@ -102,14 +101,27 @@ export default function AddRoomModal({loadRooms}) {
               value={room.type}
               onChange={handleInputChange}
               name="type"
-              // fullWidth
-              // required
+              fullWidth
+              required
+              css={css`
+                && {
+                  margin-top: 16px;
+                }
+              `}
             >
               <MenuItem value="Living Room">Living Room</MenuItem>
               <MenuItem value="Bedroom">Bedroom</MenuItem>
               <MenuItem value="Kitchen">Kitchen</MenuItem>
             </TextField>
-            <Button type="submit" onClick={handleAddRoom}>
+            <Button
+              type="submit"
+              onClick={handleAddRoom}
+              css={css`
+                && {
+                  margin-top: 16px;
+                }
+              `}
+            >
               ADD
             </Button>
           </form>
