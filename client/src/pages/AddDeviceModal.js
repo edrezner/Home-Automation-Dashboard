@@ -59,7 +59,7 @@ export default function AddDeviceModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>ADD A DEVICE</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -68,11 +68,12 @@ export default function AddDeviceModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            ADD DEVICE
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Please enter the name and type of your device
           </Typography>
+          <br/>
           <form>
             <TextField
               label="Name"

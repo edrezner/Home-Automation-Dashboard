@@ -1,6 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { Grid, Typography, FormControlLabel, Switch } from "@mui/material";
+import { useState, useEffect } from "react";
 
 const marks = [
   {
@@ -8,12 +10,16 @@ const marks = [
     label: "0°F",
   },
   {
-    value: 40,
-    label: "40°F",
+    value: 25,
+    label: "25°F",
   },
   {
-    value: 80,
-    label: "80°F",
+    value: 50,
+    label: "50°F",
+  },
+  {
+    value: 75,
+    label: "75°F",
   },
   {
     value: 100,
@@ -26,17 +32,65 @@ function valuetext(value) {
 }
 
 export default function TempWidget({ name }) {
-  return (
-    <div sx={{ width: 300 }}>
+  const [checked, setChecked] = useState(false);
+
+  const handleSwitchChange = (event) => {
+    setChecked(event.target.checked);
+  };
+  
+  const [value, setValue] = React.useState([60, 80]);
+  const handleRangeChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  if (checked){
+    return (
+      <Grid item xs={12}>
+      {/* <FormControlLabel
+        control={
+          <Switch
+            checked={checked}
+            onChange={handleSwitchChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        }
+        label="Range"
+      /> 
+
       <Slider
-        aria-label="Temperature"
-        orientation="vertical"
-        defaultValue={70}
+        getAriaLabel={() => 'Temperature range'}
+        value={value}
+        onChange={handleRangeChange}
+        valueLabelDisplay="auto"
         getAriaValueText={valuetext}
-        step={10}
-        marks={marks}
-        valueLabelDisplay="on"
+        defaultValue={[60, 80]}
       />
-    </div>
+      */}
+    </Grid>
+    )
+  }
+  return (
+    <Grid item xs={12}>
+      {/* <FormControlLabel
+        control={
+          <Switch
+            checked={checked}
+            onChange={handleSwitchChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        }
+        label="Range"
+      /> */}
+      <Typography variant="overline" display="block" gutterBottom>
+        TEMPERATURE
+      </Typography>
+      <Slider
+        track={false}
+        aria-labelledby="track-false-slider"
+        getAriaValueText={valuetext}
+        defaultValue={70}
+        marks={marks}
+      />
+    </Grid>
   );
 }

@@ -4,6 +4,18 @@ import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import VolumeDown from "@mui/icons-material/VolumeDown";
 import VolumeUp from "@mui/icons-material/VolumeUp";
+import { Grid, Typography } from "@mui/material";
+
+const marks = [
+  {
+    value: 0,
+    label: <VolumeDown />,
+  },
+  {
+    value: 100,
+    label: <VolumeUp/>,
+  },
+];
 
 export default function SpeakerWidget({ name }) {
   const [value, setValue] = React.useState(30);
@@ -13,12 +25,20 @@ export default function SpeakerWidget({ name }) {
   };
 
   return (
-    <div sx={{ width: 200 }}>
-      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-        <VolumeDown />
-        <Slider aria-label="Volume" value={value} onChange={handleChange} />
-        <VolumeUp />
-      </Stack>
-    </div>
+    // <div sx={{ width: 200 }}>
+      // <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+       <Grid item xs={12}>
+        <Typography variant="overline" display="block" gutterBottom>
+        VOLUME
+      </Typography>
+        <Slider 
+        aria-label="Volume" 
+        value={value} 
+        onChange={handleChange} 
+        marks={marks}
+        />
+      </Grid>
+      // </Stack>
+    // </div>
   );
 }

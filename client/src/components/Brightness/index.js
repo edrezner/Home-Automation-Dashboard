@@ -1,6 +1,18 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { Grid, Typography } from "@mui/material";
+
+const marks = [
+  {
+    value: 0,
+    label: "OFF",
+  },
+  {
+    value: 100,
+    label: "ON",
+  },
+];
 
 export default function LightWidget() {
   function preventHorizontalKeyboardNavigation(event) {
@@ -9,20 +21,25 @@ export default function LightWidget() {
     }
   }
 
+  const [value, setValue] = React.useState(100);
+
+  const handleLightChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <Box sx={{ height: 300 }}>
+    <Grid item xs={12}>
+      <Typography variant="overline" display="block" gutterBottom>
+        DIMMER
+      </Typography>
       <Slider
-        sx={{
-          '& input[type="range"]': {
-            WebkitAppearance: "slider-vertical",
-          },
-        }}
-        orientation="vertical"
-        defaultValue={50}
-        aria-label="Luminosity"
+        getAriaLabel={() => "Temperature range"}
+        value={value}
+        onChange={handleLightChange}
         valueLabelDisplay="auto"
-        onKeyDown={preventHorizontalKeyboardNavigation}
+        defaultValue={100}
+        marks={marks}
       />
-    </Box>
+    </Grid>
   );
 }
