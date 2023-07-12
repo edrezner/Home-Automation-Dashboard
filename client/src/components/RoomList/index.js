@@ -179,7 +179,6 @@ const RoomList = () => {
               </Card>
             </Grid>
           </Grid>
-          <AddRoomModal/>
         </Container>
       </main>
       {/* Footer */}
