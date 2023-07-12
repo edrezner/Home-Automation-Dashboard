@@ -179,10 +179,24 @@ const RoomList = () => {
               </Card>
             </Grid>
           </Grid>
+          <AddRoomModal/>
         </Container>
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+
+        <Typography variant="h6" align="center" gutterBottom>
+          Footer
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Developed by Group 4. All rights reserved.
+        </Typography>
+
         {/* <AddRoomModal loadRooms={loadRooms} /> */}
         <Copyright />
       </Box>

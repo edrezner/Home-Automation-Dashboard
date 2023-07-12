@@ -68,7 +68,9 @@ export default function AddRoomModal({loadRooms}) {
 
   return (
     <div>
+
       <IconButton onClick={handleOpen}><AddCircleIcon color="primary"/></IconButton>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -77,10 +79,12 @@ export default function AddRoomModal({loadRooms}) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
+
             Add a New Room
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Enter a name and select the Room Type
+
           </Typography>
           <form>
             <TextField

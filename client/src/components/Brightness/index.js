@@ -29,9 +29,6 @@ export default function LightWidget() {
 
   return (
     <Grid item xs={12}>
-      <Typography variant="overline" display="block" gutterBottom>
-        DIMMER
-      </Typography>
       <Slider
         getAriaLabel={() => "Temperature range"}
         value={value}
@@ -40,6 +37,9 @@ export default function LightWidget() {
         defaultValue={100}
         marks={marks}
       />
+      <Typography variant="overline" display="block" gutterBottom>
+        DIMMER
+      </Typography>
     </Grid>
   );
 }
