@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -15,7 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import { QUERY_HOME_ROOMS } from "../../utils/queries";
 import { DELETE_ROOM } from "../../utils/mutations";
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useQuery, useMutation} from "@apollo/client";
 import { useHomeContext } from "../../utils/GlobalState";
 import { getRoomImage } from "../../utils/getImages";
 import Auth from "../../utils/auth";
@@ -36,32 +35,6 @@ const RoomList = () => {
     variables: { id: currentHome },
   });
 
-  // const [getRooms, {data}] = useLazyQuery(QUERY_HOME_ROOMS)
-
-  // //loadRooms();
-
-  // function loadRooms(){
-  //   getRooms({
-  //     variables: {id: currentHome}
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   loadRooms();
-  // })
-  // if(!data){
-  //   return <h2>LOADING...</h2>;
-  // }
-
-  // console.log(JSON.stringify(data.homeRooms[0]._id, 2, null));
-
-  // const handleChange = (event) => {
-  //   setRoom(event.target.value);
-  //   dispatch({
-  //     type: UPDATE_CURRENT_ROOM,
-  //     currentHome: event.target.value
-  //   });
-  // };
 
   const [deleteRoom, { error }] = useMutation(DELETE_ROOM);
 
@@ -88,12 +61,8 @@ const RoomList = () => {
       type: REMOVE_ROOM,
       _id: _id,
     });
-    console.log(state);
+    
   };
-
-  // if (!data) {
-  //   return <h2>LOADING...</h2>;
-  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -181,8 +150,6 @@ const RoomList = () => {
         >
           Developed by Group 4. All rights reserved.
         </Typography>
-
-        {/* <AddRoomModal loadRooms={loadRooms} /> */}
         <Copyright />
       </Box>
       {/* End footer */}
