@@ -21,7 +21,7 @@ const style = {
   p: 4,
 };
 
-export default function AddRoomModal() {
+export default function AddRoomModal({loadRooms}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -54,6 +54,8 @@ export default function AddRoomModal() {
       console.error(error);
     } else {
       console.log(result);
+      setOpen(false) /// close modal
+      // loadRooms()
     }
   };
 

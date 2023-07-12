@@ -167,6 +167,7 @@ const resolvers = {
 
     addHome: async (parent, args) => {
       const home = await Home.create(args);
+      const test = await User.find({});
       const user = await User.findByIdAndUpdate(
         args.user,
         {

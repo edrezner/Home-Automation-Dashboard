@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { QUERY_HOME_ROOMS } from "../../utils/queries";
 import { DELETE_ROOM } from "../../utils/mutations";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { useHomeContext } from "../../utils/GlobalState";
 import { getRoomImage } from "../../utils/getImages";
 import Auth from "../../utils/auth";
@@ -39,14 +39,30 @@ const defaultTheme = createTheme();
 const RoomList = () => {
   const [state, dispatch] = useHomeContext();
 
-  // const [room, setRooms] = React.useState('');
-
+  const [room, setRooms] = React.useState('');
   const { currentHome } = state;
-
   const { loading, data } = useQuery(QUERY_HOME_ROOMS, {
     variables: { id: currentHome },
   });
+
   console.log(currentHome, data);
+
+  // const [getRooms, {data}] = useLazyQuery(QUERY_HOME_ROOMS)
+
+  // //loadRooms();
+
+  // function loadRooms(){
+  //   getRooms({
+  //     variables: {id: currentHome}
+  //   })
+  // }
+
+  // useEffect(() => {
+  //   loadRooms();
+  // })
+  // if(!data){
+  //   return <h2>LOADING...</h2>;
+  // }
 
   // console.log(JSON.stringify(data.homeRooms[0]._id, 2, null));
 
@@ -86,9 +102,9 @@ const RoomList = () => {
     console.log(state);
   };
 
-  if (loading) {
-    return <h2>LOADING...</h2>;
-  }
+  // if (!data) {
+  //   return <h2>LOADING...</h2>;
+  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -151,7 +167,8 @@ const RoomList = () => {
         >
           Something here to give the footer a purpose!
         </Typography>
-        <AddRoomModal />
+        <AddRoomModal/>
+        {/* <AddRoomModal loadRooms={loadRooms} /> */}
         <Copyright />
       </Box>
       {/* End footer */}
