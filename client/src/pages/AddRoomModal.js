@@ -66,7 +66,7 @@ export default function AddRoomModal({loadRooms}) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>ADD ROOM</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -75,10 +75,10 @@ export default function AddRoomModal({loadRooms}) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            ADD ROOM
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          Please enter the name and type of your room.
           </Typography>
           <form>
             <TextField

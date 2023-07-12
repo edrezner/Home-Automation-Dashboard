@@ -92,19 +92,18 @@ export default function RenderDevices() {
                         padding: 5,
                       }}
                     >
-                      {widgetEl}
                       <Typography variant="button" display="block" gutterBottom>
                         {name}
                       </Typography>
+                      {widgetEl}
                     </Box>
                   </Grid>
                 );
               })}
               {/* </div> */}
             </Grid>
+            <AddDeviceModal />
           </Box>
-          <hr />
-          <AddDeviceModal />
         </>
       )}
     </>

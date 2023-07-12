@@ -81,9 +81,6 @@ export default function TempWidget({ name }) {
         }
         label="Range"
       /> */}
-      <Typography variant="overline" display="block" gutterBottom>
-        TEMPERATURE
-      </Typography>
       <Slider
         track={false}
         aria-labelledby="track-false-slider"
@@ -91,6 +88,9 @@ export default function TempWidget({ name }) {
         defaultValue={70}
         marks={marks}
       />
+      <Typography variant="overline" display="block" gutterBottom>
+        TEMPERATURE
+      </Typography>
     </Grid>
   );
 }

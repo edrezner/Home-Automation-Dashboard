@@ -104,7 +104,7 @@ const DeviceList = () => {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Developed by Group 4. All rights reserved.
         </Typography>
         <Copyright />
       </Box>

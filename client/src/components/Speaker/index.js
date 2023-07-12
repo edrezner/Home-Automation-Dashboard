@@ -28,15 +28,15 @@ export default function SpeakerWidget({ name }) {
     // <div sx={{ width: 200 }}>
       // <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
        <Grid item xs={12}>
-        <Typography variant="overline" display="block" gutterBottom>
-        VOLUME
-      </Typography>
         <Slider 
         aria-label="Volume" 
         value={value} 
         onChange={handleChange} 
         marks={marks}
         />
+        <Typography variant="overline" display="block" gutterBottom>
+        VOLUME
+      </Typography>
       </Grid>
       // </Stack>
     // </div>
