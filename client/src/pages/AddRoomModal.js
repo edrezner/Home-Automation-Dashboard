@@ -47,6 +47,11 @@ export default function AddRoomModal({ loadRooms }) {
     event.preventDefault();
     const { name, type, currentHome } = room;
 
+    if (!state.currentHome) {
+      window.alert("Please select a Home First");
+      return;
+    }
+    
     const home = state.currentHome;
 
     const result = await addRoom({
