@@ -10,6 +10,7 @@ import { QUERY_USER } from "../../utils/queries";
 import { useQuery } from "@apollo/client";
 import { useHomeContext } from "../../utils/GlobalState";
 import { UPDATE_CURRENT_HOME } from "../../utils/actions";
+import AddHomeModal from "../../pages/AddHomeModal";
 
 const HomeList = () => {
   const [state, dispatch] = useHomeContext();
@@ -47,9 +48,7 @@ const HomeList = () => {
           })}
         </Select>
       </FormControl>
-      <Fab color="primary" aria-label="add" id="addHomeButton">
-        <AddIcon fontSize="medium" />
-      </Fab>
+      <AddHomeModal />
     </div>
   );
 };

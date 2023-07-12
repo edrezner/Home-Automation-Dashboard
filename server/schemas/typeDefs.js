@@ -71,7 +71,7 @@ const typeDefs = gql`
     addRoom(name: String!, type: String!, home: ID!): Room
     updateRoom(name: String!, type: String!): Room
     deleteRoom(_id: ID!, homeId: ID!): Room
-    addHome(name: String!, user: ID!): User
+    addHome(name: String!): Home
     deleteHome(_id: ID!): Home
   }
 
