@@ -152,6 +152,7 @@ const RoomList = () => {
               </Grid>
             ))}
           </Grid>
+          <AddRoomModal/>
         </Container>
       </main>
       {/* Footer */}
@@ -165,9 +166,8 @@ const RoomList = () => {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Developed by Group 4. All rights reserved.
         </Typography>
-        <AddRoomModal/>
         {/* <AddRoomModal loadRooms={loadRooms} /> */}
         <Copyright />
       </Box>

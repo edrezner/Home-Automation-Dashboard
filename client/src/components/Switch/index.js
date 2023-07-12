@@ -27,9 +27,6 @@ export default function TvWidget({ name }) {
   return (
 
     <Grid item xs={12}>
-      <Typography variant="overline" display="block" gutterBottom>
-        ON/OFF
-      </Typography>
       <FormControlLabel
         control={
           <Switch
@@ -40,6 +37,9 @@ export default function TvWidget({ name }) {
         }
         label="ON"
       />
+      <Typography variant="overline" display="block" gutterBottom>
+        ON/OFF
+      </Typography>
     </Grid>
   );
 }
