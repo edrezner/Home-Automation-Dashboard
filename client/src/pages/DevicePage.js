@@ -44,6 +44,8 @@ export default function RenderDevices() {
         return <LightWidget />;
       case "Speakers":
         return <SpeakerWidget />;
+      case "Television":
+        return <TvWidget />;
     }
   }
 
