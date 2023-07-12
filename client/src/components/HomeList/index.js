@@ -32,7 +32,7 @@ const HomeList = () => {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 100 }}>
+      <FormControl id="homeForm" sx={{ m: 1, minWidth: 100 }}>
         <InputLabel id="demo-simple-select-autowidth-label">Home</InputLabel>
         <Select
           labelId="demo-simple-select-autowidth-label"
@@ -40,18 +40,15 @@ const HomeList = () => {
           value={home}
           onChange={handleChange}
           autoWidth
-          label="Home"
+          label="Select Your Home"
         >
           {userData.homes?.map((home) => {
             return <MenuItem value={home._id}>{home.name}</MenuItem>;
           })}
-          <MenuItem value={"64ab1fe8fc66c11649bfbf95"}>Evan's Estate</MenuItem>
-          {/* <MenuItem value={21}>Eric's Estate</MenuItem>
-          <MenuItem value={22}>Pablo's Penthouse</MenuItem> */}
         </Select>
       </FormControl>
-      <Fab color="primary" aria-label="add">
-        <AddIcon />
+      <Fab color="primary" aria-label="add" id="addHomeButton">
+        <AddIcon fontSize="medium" />
       </Fab>
     </div>
   );

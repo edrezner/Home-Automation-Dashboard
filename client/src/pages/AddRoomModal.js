@@ -8,6 +8,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { useMutation } from "@apollo/client";
 import { ADD_ROOM } from "../utils/mutations";
 import { useHomeContext } from "../utils/GlobalState";
+import IconButton from '@mui/material/IconButton';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const style = {
   position: "absolute",
@@ -66,7 +68,7 @@ export default function AddRoomModal({loadRooms}) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <IconButton onClick={handleOpen}><AddCircleIcon color="primary"/></IconButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -75,10 +77,10 @@ export default function AddRoomModal({loadRooms}) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Add a New Room
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Enter a name and select the Room Type
           </Typography>
           <form>
             <TextField
@@ -91,6 +93,7 @@ export default function AddRoomModal({loadRooms}) {
             />
             <TextField
               select
+              placeholder="Living Room"
               label="Type"
               value={room.type}
               onChange={handleInputChange}
@@ -103,7 +106,7 @@ export default function AddRoomModal({loadRooms}) {
               <MenuItem value="Kitchen">Kitchen</MenuItem>
             </TextField>
             <Button type="submit" onClick={handleAddRoom}>
-              Add
+              ADD
             </Button>
           </form>
         </Box>
