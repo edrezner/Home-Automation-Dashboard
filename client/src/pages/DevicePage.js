@@ -1,19 +1,12 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom/client";
 import { Link, useParams } from "react-router-dom";
 import { useHomeContext } from "../utils/GlobalState";
-import Button from "@mui/material/Button";
 import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
-import { VolumeDown, VolumeUp } from "@mui/icons-material";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import { Grid, Typography, Slider } from "@mui/material";
 import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import "./Device.css";
-import { Modal } from "@mui/material";
 import AddDeviceModal from "./AddDeviceModal";
 
 import LightWidget from "../components/Brightness";

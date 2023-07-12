@@ -1,4 +1,5 @@
 import * as React from "react";
+import { css } from "@emotion/react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -73,15 +74,15 @@ export default function AddDeviceModal() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please enter the name and type of your device
           </Typography>
-          <br/>
+          <br />
           <form>
             <TextField
               label="Name"
               value={device.name}
               onChange={handleInputChange}
               name="name"
-              // fullWidth
-              // required
+              fullWidth
+              required
             />
             <TextField
               select
@@ -89,15 +90,28 @@ export default function AddDeviceModal() {
               value={device.type}
               onChange={handleInputChange}
               name="type"
-              // fullWidth
-              // required
+              fullWidth
+              required
+              css={css`
+                && {
+                  margin-top: 16px;
+                }
+              `}
             >
               <MenuItem value="Television">Television</MenuItem>
               <MenuItem value="Speakers">Speakers</MenuItem>
               <MenuItem value="Lights">Lights</MenuItem>
               <MenuItem value="Thermostat">Thermostat</MenuItem>
             </TextField>
-            <Button type="submit" onClick={handleAddDevice}>
+            <Button
+              type="submit"
+              onClick={handleAddDevice}
+              css={css`
+                && {
+                  margin-top: 16px;
+                }
+              `}
+            >
               Add
             </Button>
           </form>
