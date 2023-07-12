@@ -6,8 +6,8 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { useMutation } from "@apollo/client";
 import { ADD_HOME } from "../utils/mutations";
-import IconButton from '@mui/material/IconButton';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import IconButton from "@mui/material/IconButton";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const style = {
   position: "absolute",
@@ -27,11 +27,11 @@ export default function AddHomeModal() {
   const handleClose = () => setOpen(false);
   const [addHome, { error }] = useMutation(ADD_HOME);
 
-  const [homeName, setHomeName] = React.useState('');
+  const [homeName, setHomeName] = React.useState("");
 
   const handleAddRoom = async (event) => {
     event.preventDefault();
-    
+
     const result = await addHome({
       variables: { homeName },
     });
@@ -40,7 +40,7 @@ export default function AddHomeModal() {
       console.error(error);
     } else {
       console.log(result);
-      setOpen(false) /// close modal
+      setOpen(false); /// close modal
       // loadRooms()
     }
   };
@@ -52,8 +52,9 @@ export default function AddHomeModal() {
 
   return (
     <div>
-
-      <IconButton onClick={handleOpen}><AddCircleIcon color="primary"/></IconButton>
+      <IconButton onClick={handleOpen}>
+        <AddCircleIcon color="primary" />
+      </IconButton>
 
       <Modal
         open={open}
@@ -63,12 +64,10 @@ export default function AddHomeModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-
-            Add a New Room
+            Add a New Home
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Enter a name and select the Room Type
-
+            Enter a name for your Home
           </Typography>
           <form>
             <TextField
