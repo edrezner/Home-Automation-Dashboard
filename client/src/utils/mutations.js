@@ -131,11 +131,10 @@ export const DELETE_ROOM = gql`
 `;
 
 export const ADD_HOME = gql`
-  mutation addHome($name: String!, $type: String!) {
-    addHome(name: $name, type: $type) {
+  mutation addHome($homeName: String!) {
+    addHome(name: $homeName) {
       _id
       name
-      type
     }
   }
 `;

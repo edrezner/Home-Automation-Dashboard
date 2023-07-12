@@ -165,11 +165,10 @@ const resolvers = {
       return deletedRoom;
     },
 
-    addHome: async (parent, args) => {
+    addHome: async (parent, args, context) => {
       const home = await Home.create(args);
-      const test = await User.find({});
       const user = await User.findByIdAndUpdate(
-        args.user,
+        context.user._id,
         {
           $push: { homes: home._id },
         },
