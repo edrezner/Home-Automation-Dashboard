@@ -8,6 +8,7 @@ import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import "./Device.css";
 import AddDeviceModal from "./AddDeviceModal";
+import Copyright from "../components/Copyright";
 
 import LightWidget from "../components/Brightness";
 import SpeakerWidget from "../components/Speaker";
@@ -41,8 +42,6 @@ export default function RenderDevices() {
         return <TempWidget />;
       case "Lights":
         return <LightWidget />;
-      case "Television":
-        return <TvWidget />;
       case "Speakers":
         return <SpeakerWidget />;
     }
@@ -56,14 +55,6 @@ export default function RenderDevices() {
         <>
           <Stack direction="row" spacing={2}>
             <h2 className="text">Devices</h2>
-            <button
-              id="logout"
-              onClick={() => {
-                /*TODO */
-              }}
-            >
-              Logout
-            </button>
           </Stack>
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={6} sx={{ padding: 6 }}>
@@ -96,6 +87,22 @@ export default function RenderDevices() {
               {/* </div> */}
             </Grid>
             <AddDeviceModal />
+          </Box>
+          <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+            <Typography variant="h6" align="center" gutterBottom>
+              Footer
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              align="center"
+              color="text.secondary"
+              component="p"
+            >
+              Developed by Group 4. All rights reserved.
+            </Typography>
+
+            {/* <AddRoomModal loadRooms={loadRooms} /> */}
+            <Copyright />
           </Box>
         </>
       )}

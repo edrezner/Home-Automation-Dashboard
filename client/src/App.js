@@ -13,7 +13,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { HomeProvider } from "./utils/GlobalState";
 import DevicePage from "./pages/DevicePage";
-import './App.css';
+import "./App.css";
 
 const httpLink = createHttpLink({
   uri: "/graphql",

@@ -4,6 +4,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import Copyright from "../Copyright";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -23,19 +24,6 @@ import AddRoomModal from "../../pages/AddRoomModal";
 import { red } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import houseImage from "../../assets/images/homepage.png";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Home Automation
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const defaultTheme = createTheme();
 
@@ -79,7 +67,7 @@ const RoomList = () => {
 
   const handleDeleteRoom = async (_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-    
+
     if (!token) {
       return false;
     }
@@ -92,7 +80,6 @@ const RoomList = () => {
       if (!response) {
         throw new Error("something went wrong!");
       }
-
     } catch (err) {
       console.error(err);
     }
@@ -183,7 +170,6 @@ const RoomList = () => {
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
