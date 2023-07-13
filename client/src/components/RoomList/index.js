@@ -23,6 +23,7 @@ import AddRoomModal from "../../pages/AddRoomModal";
 import { red } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import houseImage from "../../assets/images/homepage.png";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const defaultTheme = createTheme();
 
@@ -138,7 +139,7 @@ const RoomList = () => {
       {/* Footer */}
       <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          <IconButton onClick={Auth.logout}><LogoutIcon/>  Log Out</IconButton>
         </Typography>
         <Typography
           variant="subtitle1"
