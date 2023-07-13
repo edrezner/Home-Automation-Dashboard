@@ -12,7 +12,9 @@ GitHub Repo, Website, and Preview Image:
 
 [Website](https://shielded-hollows-24695-c35d1dd6cf76.herokuapp.com/)
 
-![Preview Image]()
+![Preview Rooms](./client/src/assets/images/roompreview.png)
+
+![Preview Devices](./client/src/assets/images/devicepreview.png)
 
 ## Table of Contents
 
