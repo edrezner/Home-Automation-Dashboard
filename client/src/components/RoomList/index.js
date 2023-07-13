@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import { QUERY_HOME_ROOMS } from "../../utils/queries";
 import { DELETE_ROOM } from "../../utils/mutations";
-import { useQuery, useMutation} from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { useHomeContext } from "../../utils/GlobalState";
 import { getRoomImage } from "../../utils/getImages";
 import Auth from "../../utils/auth";
@@ -35,7 +35,6 @@ const RoomList = () => {
   const { loading, data } = useQuery(QUERY_HOME_ROOMS, {
     variables: { id: currentHome },
   });
-
 
   const [deleteRoom, { error }] = useMutation(DELETE_ROOM);
 
@@ -62,7 +61,6 @@ const RoomList = () => {
       type: REMOVE_ROOM,
       _id: _id,
     });
-
   };
 
   return (
