@@ -49,13 +49,6 @@ function App() {
               <Route path="/rooms/:id" element={<DevicePage />} />
             </Routes>
           </HomeProvider>
-
-          {/* </HomeProvider> 
-          /devices?deviceId=__ <- search params
-          /devices/__ <- useLocation or window.location.href
-          
-          
-          */}
         </div>
       </Router>
     </ApolloProvider>

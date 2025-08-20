@@ -14,6 +14,9 @@ import LightWidget from "../components/Brightness";
 import SpeakerWidget from "../components/Speaker";
 import TempWidget from "../components/Thermostat";
 import TvWidget from "../components/Switch";
+import LogoutIcon from '@mui/icons-material/Logout';
+import Auth from "../utils/auth";
+import IconButton from "@mui/material/IconButton";
 
 import { useQuery, useMutation } from "@apollo/client";
 // TODO: Correct module package
@@ -92,7 +95,7 @@ export default function RenderDevices() {
           </Box>
           <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
             <Typography variant="h6" align="center" gutterBottom>
-              Footer
+            <IconButton onClick={Auth.logout}><LogoutIcon/>  Log Out</IconButton>
             </Typography>
             <Typography
               variant="subtitle1"
