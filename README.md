@@ -30,6 +30,10 @@ Current homes are shown in the dropdown; selecting a home will render all the ro
 
 The device settings can be manipulated and a new device can be added as well.
 
+## Known Issues
+
+Must refresh page upon adding a Home or Room in order to populate the addition correctly.
+
 ## License
 
 MIT
